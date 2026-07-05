@@ -2,11 +2,28 @@ import { useState } from 'react';
 import { perfumes } from './productos';
 
 function App() {
-  // Estados para manejar el carrito y el panel lateral
+  // Estados para manejar el carrito, paneles, datos del cliente, buscador y filtros
   const [carrito, setCarrito] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [datosCliente, setDatosCliente] = useState({ nombre: '', direccion: '', notas: '' });
+  const [busqueda, setBusqueda] = useState('');
+  const [marcaSeleccionada, setMarcaSeleccionada] = useState('TODAS');
+  
+  // Estado para la notificación flotante sutil
+  const [notificacion, setNotificacion] = useState(null);
 
-  // Función para añadir al carrito
+  // Obtener lista de marcas únicas para los botones de filtro
+  const marcasUnicas = ['TODAS', ...new Set(perfumes.map(p => p.marca))];
+
+  // Lógica para filtrar los perfumes en tiempo real
+  const perfumesFiltrados = perfumes.filter((perfume) => {
+    const coincideBusqueda = perfume.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    const coincideMarca = marcaSeleccionada === 'TODAS' || perfume.marca === marcaSeleccionada;
+    return coincideBusqueda && coincideMarca;
+  });
+
+  // Función para añadir al carrito (No abre el panel, muestra notificación sutil)
   const agregarAlCarrito = (perfume) => {
     const productoExistente = carrito.find(item => item.id === perfume.id);
     if (productoExistente) {
@@ -14,34 +31,52 @@ function App() {
     } else {
       setCarrito([...carrito, { ...perfume, cantidad: 1 }]);
     }
-    setIsCartOpen(true); // Abre el carrito automáticamente al añadir
+    
+    // Mostramos la notificación flotante
+    setNotificacion(`${perfume.nombre} añadido`);
+    
+    // La ocultamos automáticamente a los 3 segundos
+    setTimeout(() => {
+      setNotificacion(null);
+    }, 3000);
   };
 
-  // Función para eliminar del carrito
   const eliminarDelCarrito = (id) => {
     setCarrito(carrito.filter(item => item.id !== id));
   };
 
-  // Calcular el total (convirtiendo los strings como "4.000" a números)
+  // Calcular el total
   const total = carrito.reduce((acc, item) => {
     const precioNumerico = parseFloat(item.precio.replace('.', ''));
     return acc + (precioNumerico * item.cantidad);
   }, 0);
-
-  // Formatear el total para que se vea como dinero
   const totalFormateado = total.toLocaleString('es-ES');
 
+  // Lógica para enviar el pedido ordenado por WhatsApp
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    // CAMBIAR POR EL NÚMERO REAL DE TU CLIENTE (Código país + número sin el +)
+    const numeroWhatsApp = "1234567890"; 
+    
+    let mensaje = `🔥 *¡Hola Huele Candela! Quiero hacer un pedido:*\n\n`;
+    carrito.forEach(item => {
+      mensaje += `▪️ ${item.cantidad}x ${item.nombre} ($${item.precio})\n`;
+    });
+    mensaje += `\n💰 *Total a pagar:* $${totalFormateado}\n\n`;
+    mensaje += `📦 *Mis datos de envío:*\n👤 Nombre: ${datosCliente.nombre}\n📍 Dirección: ${datosCliente.direccion}\n`;
+    if(datosCliente.notas) mensaje += `📝 Notas: ${datosCliente.notas}\n`;
+
+    const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  };
+
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-8 font-sans relative">
+    <div className="min-h-screen bg-[#1a1a1a] p-4 md:p-8 relative" style={{ fontFamily: "'Aileron', sans-serif" }}>
       
       {/* Cabecera (Navbar) */}
-      <nav className="flex justify-between items-center mb-12 border-b border-gray-700 pb-4 max-w-4xl mx-auto">
+      <nav className="flex justify-between items-center mb-8 border-b border-gray-700 pb-4 max-w-5xl mx-auto">
         <div className="flex items-center gap-3">
-          {/* Logo del Cliente (Asegúrate de que esté en la carpeta public como logo.svg o cambia la extensión) */}
-          <img src="/logo.svg" alt="Logo Cliente" className="h-40 w-auto drop-shadow-md" />
-          {/* <span className="text-[#f97316] text-2xl font-bold tracking-widest hidden md:block" style={{ fontFamily: "'Oswald', 'Impact', sans-serif" }}>
-            HUELE CANDELA
-          </span> */}
+          <img src="/logo.svg" alt="Logo Cliente" className="h-20 md:h-28 w-auto drop-shadow-md" /> 
         </div>
 
         {/* Botón del Carrito en el Navbar */}
@@ -60,58 +95,100 @@ function App() {
         </button>
       </nav>
 
-      {/* Título de la Marca */}
-      <h1 className="text-[#e5e5e5] text-6xl text-center mb-10 tracking-wider" style={{ fontFamily: "'Oswald', 'Impact', sans-serif", transform: "scaleY(1.5)" }}>
-        LATTAFA
-      </h1>
+      {/* SECCIÓN DE BÚSQUEDA Y FILTROS */}
+      <div className="max-w-5xl mx-auto mb-10 space-y-6">
+        <div className="relative w-full max-w-xl mx-auto">
+          <input 
+            type="text" 
+            placeholder="Buscar perfume..." 
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            className="w-full bg-[#2a2a2a] text-white border border-gray-700 rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-[#f97316] transition-colors placeholder-gray-500 text-sm md:text-base"
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 absolute left-4 top-3.5 text-gray-500">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>
+        </div>
 
-      {/* Cuadrícula de Productos */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10 max-w-4xl mx-auto">
-        {perfumes.map((perfume) => (
-          <div key={perfume.id} className="flex flex-col group">
-            
-            {/* Contenedor Blanco de la Imagen con efecto Hover y Auto-Ajuste */}
-            <div className="bg-white rounded-3xl p-6 md:p-8 aspect-square flex items-center justify-center mb-3 shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-[#f97316]/20 group-hover:shadow-2xl overflow-hidden">
-              <img 
-                src={perfume.imagen} 
-                alt={perfume.nombre} 
-                /* El mix-blend-multiply es el truco para desaparecer los fondos blancos de las fotos */
-                className="object-contain h-full w-full drop-shadow-md transition-transform duration-300 group-hover:scale-110 mix-blend-multiply" 
-              />
-            </div>
-
-            {/* Textos del Producto */}
-            <h3 className="text-[#e5e5e5] text-xl uppercase leading-none tracking-wide mt-2" style={{ fontFamily: "'Oswald', 'Impact', sans-serif", transform: "scaleY(1.2)", transformOrigin: "left" }}>
-              {perfume.nombre}
-            </h3>
-            <p className="text-[#f97316] font-bold text-lg mt-2">
-              ${perfume.precio}
-            </p>
-
-            {/* Botón Añadir al Carrito */}
-            <button 
-              onClick={() => agregarAlCarrito(perfume)}
-              className="mt-4 bg-transparent border border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-white font-bold py-2 px-4 rounded-full transition-all duration-300 text-sm tracking-wider"
+        <div className="flex flex-wrap justify-center gap-3">
+          {marcasUnicas.map(marca => (
+            <button
+              key={marca}
+              onClick={() => setMarcaSeleccionada(marca)}
+              className={`px-5 py-2 rounded-full text-xs md:text-sm font-bold tracking-wider transition-all duration-300 ${
+                marcaSeleccionada === marca 
+                  ? 'bg-[#f97316] text-white shadow-lg shadow-orange-500/30' 
+                  : 'bg-transparent border border-gray-600 text-gray-400 hover:border-[#f97316] hover:text-[#f97316]'
+              }`}
             >
-              AÑADIR AL CARRITO
+              {marca}
             </button>
-
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* PANEL LATERAL DEL CARRITO (Modal) */}
+      {/* Título Principal */}
+      <h1 className="text-[#e5e5e5] text-5xl md:text-7xl text-center mb-10 tracking-wider uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>
+        {marcaSeleccionada === 'TODAS' ? 'NUESTRA COLECCIÓN' : marcaSeleccionada}
+      </h1>
+
+      {/* CUADRÍCULA DE PRODUCTOS */}
+      {perfumesFiltrados.length === 0 ? (
+        <p className="text-center text-gray-500 text-lg mt-12">No se encontraron perfumes.</p>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 max-w-5xl mx-auto">
+          {perfumesFiltrados.map((perfume) => (
+            <div key={perfume.id} className="flex flex-col group">
+              
+              <div className="bg-white rounded-3xl p-4 md:p-6 aspect-square flex items-center justify-center mb-3 shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-[#f97316]/20 overflow-hidden cursor-pointer">
+                <img src={perfume.imagen} alt={perfume.nombre} className="object-contain h-full w-full drop-shadow-md transition-transform duration-300 group-hover:scale-110 mix-blend-multiply" />
+              </div>
+
+              <div className="flex justify-between items-start gap-2 px-1">
+                <div className="flex-1 cursor-pointer">
+                  <h3 className="text-[#e5e5e5] text-xl md:text-2xl uppercase leading-none tracking-wide mt-2" style={{ fontFamily: "'Extenda', sans-serif" }}>
+                    {perfume.nombre}
+                  </h3>
+                  <p className="text-[#f97316] font-bold text-sm md:text-base mt-1 tracking-widest" style={{ fontFamily: "'Aileron', sans-serif" }}>
+                    ${perfume.precio}
+                  </p>
+                </div>
+
+                {/* Botón de añadir premium con signo + */}
+                <button 
+                  onClick={() => agregarAlCarrito(perfume)}
+                  className="mt-2 p-2 text-gray-500 hover:text-[#f97316] transition-colors duration-300 rounded-full hover:bg-[#f97316]/10 flex items-center justify-center"
+                  title="Añadir al carrito"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* NOTIFICACIÓN FLOTANTE (TOAST) */}
+      {notificacion && (
+        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-[#f97316] text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold tracking-wider flex items-center gap-2 animate-bounce">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          </svg>
+          {notificacion}
+        </div>
+      )}
+
+      {/* PANEL LATERAL DEL CARRITO */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
-          {/* Fondo oscuro semi-transparente */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
-          
-          {/* Panel blanco del carrito */}
-          <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-0">
+          <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col">
             
-            {/* Cabecera del Panel */}
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900 tracking-wide" style={{ fontFamily: "'Oswald', sans-serif" }}>TU CARRITO</h2>
+              <h2 className="text-2xl font-bold text-gray-900 tracking-wide" style={{ fontFamily: "'Extenda', sans-serif" }}>TU CARRITO</h2>
               <button onClick={() => setIsCartOpen(false)} className="text-gray-500 hover:text-[#f97316] transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -119,7 +196,6 @@ function App() {
               </button>
             </div>
 
-            {/* Lista de Productos en el Carrito */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
               {carrito.length === 0 ? (
                 <p className="text-center text-gray-500 mt-10">Tu carrito está vacío.</p>
@@ -127,11 +203,11 @@ function App() {
                 carrito.map((item) => (
                   <div key={item.id} className="flex gap-4 items-center">
                     <div className="w-20 h-20 bg-gray-100 rounded-xl p-2 flex-shrink-0">
-                      <img src={item.imagen} alt={item.nombre} className="w-full h-full object-contain" />
+                      <img src={item.imagen} alt={item.nombre} className="w-full h-full object-contain mix-blend-multiply" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-bold text-gray-900 text-sm md:text-base leading-tight">{item.nombre}</h4>
-                      <p className="text-[#f97316] font-bold text-sm mt-1">${item.precio}</p>
+                      <h4 className="font-bold text-gray-900 text-sm md:text-base leading-tight" style={{ fontFamily: "'Extenda', sans-serif" }}>{item.nombre}</h4>
+                      <p className="text-[#f97316] font-bold text-xs md:text-sm mt-1" style={{ fontFamily: "'Aileron', sans-serif" }}>${item.precio}</p>
                       <p className="text-xs text-gray-500 mt-1">Cantidad: {item.cantidad}</p>
                     </div>
                     <button onClick={() => eliminarDelCarrito(item.id)} className="text-red-400 hover:text-red-600">
@@ -144,23 +220,56 @@ function App() {
               )}
             </div>
 
-            {/* Total y Botón de Checkout */}
             {carrito.length > 0 && (
               <div className="p-6 border-t border-gray-200 bg-gray-50">
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-lg font-bold text-gray-900">Total:</span>
-                  <span className="text-2xl font-bold text-[#f97316]">${totalFormateado}</span>
+                  <span className="text-2xl font-bold text-[#f97316]" style={{ fontFamily: "'Aileron', sans-serif" }}>${totalFormateado}</span>
                 </div>
-                <button className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-orange-500/30">
+                <button 
+                  onClick={() => { setIsCartOpen(false); setIsCheckoutOpen(true); }}
+                  className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-orange-500/30 tracking-wider text-sm"
+                >
                   FINALIZAR PEDIDO
                 </button>
               </div>
             )}
-            
           </div>
         </div>
       )}
 
+      {/* MODAL DE CHECKOUT (Formulario de pago) */}
+      {isCheckoutOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsCheckoutOpen(false)}></div>
+          <div className="relative w-full max-w-lg bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 shadow-2xl">
+            <h2 className="text-2xl font-bold text-[#e5e5e5] mb-6 tracking-wide" style={{ fontFamily: "'Extenda', sans-serif" }}>DATOS DE ENVÍO</h2>
+            <form onSubmit={handleCheckout} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-1">Nombre Completo *</label>
+                <input type="text" required className="w-full bg-[#2a2a2a] text-white border border-gray-600 rounded-xl p-3 focus:outline-none focus:border-[#f97316] transition-colors" value={datosCliente.nombre} onChange={(e) => setDatosCliente({...datosCliente, nombre: e.target.value})} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-1">Dirección Completa *</label>
+                <input type="text" required className="w-full bg-[#2a2a2a] text-white border border-gray-600 rounded-xl p-3 focus:outline-none focus:border-[#f97316] transition-colors" value={datosCliente.direccion} onChange={(e) => setDatosCliente({...datosCliente, direccion: e.target.value})} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-1">Comentarios (Opcional)</label>
+                <textarea className="w-full bg-[#2a2a2a] text-white border border-gray-600 rounded-xl p-3 h-24 focus:outline-none focus:border-[#f97316] transition-colors resize-none placeholder-gray-600 text-sm" placeholder="Ej: Dejar en portería..." value={datosCliente.notes} onChange={(e) => setDatosCliente({...datosCliente, notas: e.target.value})}></textarea>
+              </div>
+              <div className="pt-4 flex gap-4">
+                <button type="button" onClick={() => setIsCheckoutOpen(false)} className="w-1/3 bg-transparent text-gray-400 hover:text-white font-bold py-3 rounded-xl transition-colors text-sm">CANCELAR</button>
+                <button type="submit" className="w-2/3 bg-[#25D366] hover:bg-[#20b858] text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20 text-sm tracking-wider">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                    <path fillRule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clipRule="evenodd" />
+                  </svg>
+                  ENVIAR A WHATSAPP
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,9 @@
+@font-face {
+	font-family: 'Extenda-30Deca';
+	src: url('../fonts/extenda-30deca.eot'); /* IE 9 Compatibility Mode */
+	src: url('../fonts/extenda-30deca.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
+		url('../fonts/extenda-30deca.woff2') format('woff2'), /* Super Modern Browsers */
+		url('../fonts/extenda-30deca.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
+		url('../fonts/extenda-30deca.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('../fonts/extenda-30deca.svg#extenda-30deca') format('svg'); /* Chrome < 4, Legacy iOS */
+}

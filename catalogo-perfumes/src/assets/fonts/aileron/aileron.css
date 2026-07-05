@@ -1,0 +1,9 @@
+@font-face {
+	font-family: 'Aileron';
+	src: url('../fonts/aileron.eot'); /* IE 9 Compatibility Mode */
+	src: url('../fonts/aileron.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
+		url('../fonts/aileron.woff2') format('woff2'), /* Super Modern Browsers */
+		url('../fonts/aileron.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
+		url('../fonts/aileron.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('../fonts/aileron.svg#aileron') format('svg'); /* Chrome < 4, Legacy iOS */
+}
