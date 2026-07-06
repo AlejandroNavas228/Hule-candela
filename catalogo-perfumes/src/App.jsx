@@ -58,14 +58,33 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-4 md:p-8 relative flex flex-col" style={{ fontFamily: "'Aileron', sans-serif" }}>
+    <div className="min-h-screen bg-[#1a1a1a] p-4 md:p-8 relative flex flex-col overflow-x-hidden" style={{ fontFamily: "'Aileron', sans-serif" }}>
       
+      {/* Estilos inyectados para las animaciones fluidas del Carrito */}
+      <style>{`
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .animate-slide-in {
+          animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.3s ease-out forwards;
+        }
+      `}</style>
+
       {/* Contenido Principal */}
       <div className="flex-1">
         {/* Cabecera (Navbar) */}
         <nav className="flex justify-between items-center mb-8 border-b border-gray-700 pb-4 max-w-5xl mx-auto">
           <div className="flex items-center gap-3">
-            <img src="/logo.svg" alt="Logo Cliente" className="h-20 md:h-28 w-auto drop-shadow-md" /> 
+            {/* Logo optimizado: un poco más grande en móviles (h-24) para mantener presencia */}
+            <img src="/logo.svg" alt="Logo Cliente" className="h-24 md:h-40 w-auto drop-shadow-md" /> 
           </div>
 
           <button onClick={() => setIsCartOpen(true)} className="relative p-2 text-[#e5e5e5] hover:text-[#f97316] transition-colors duration-300">
@@ -165,19 +184,21 @@ function App() {
         </svg>
       </a>
 
-      {/* Notificación (Toast) ajustada para no chocar con el botón de WhatsApp */}
+      {/* Notificación (Toast) */}
       {notificacion && (
-        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-[#f97316] text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold tracking-wider flex items-center gap-2 animate-bounce">
+        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-[#f97316] text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold tracking-wider flex items-center gap-2 animate-fade-in">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
           {notificacion}
         </div>
       )}
 
-      {/* PANELES DE CARRITO Y CHECKOUT */}
+      {/* PANEL LATERAL DEL CARRITO */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
-          <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col">
+          {/* Fondo oscuro con fade-in */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setIsCartOpen(false)}></div>
+          {/* Panel blanco con slide-in */}
+          <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-slide-in">
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
               <h2 className="text-2xl font-bold text-gray-900 tracking-wide" style={{ fontFamily: "'Extenda', sans-serif" }}>TU CARRITO</h2>
               <button onClick={() => setIsCartOpen(false)} className="text-gray-500 hover:text-[#f97316] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
@@ -211,11 +232,11 @@ function App() {
         </div>
       )}
 
-      {/* MODAL DE CHECKOUT */}
+      {/* MODAL DE CHECKOUT REDISEÑADO */}
       {isCheckoutOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsCheckoutOpen(false)}></div>
-          <div className="relative w-full max-w-lg bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 shadow-2xl">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" onClick={() => setIsCheckoutOpen(false)}></div>
+          <div className="relative w-full max-w-lg bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 shadow-2xl animate-fade-in">
             <h2 className="text-2xl font-bold text-[#e5e5e5] mb-6 tracking-wide" style={{ fontFamily: "'Extenda', sans-serif" }}>DATOS DE ENVÍO</h2>
             <form onSubmit={handleCheckout} className="space-y-4">
               <div>
@@ -230,10 +251,16 @@ function App() {
                 <label className="block text-sm font-medium text-gray-400 mb-1">Comentarios (Opcional)</label>
                 <textarea className="w-full bg-[#2a2a2a] text-white border border-gray-600 rounded-xl p-3 h-24 focus:outline-none focus:border-[#f97316] transition-colors resize-none placeholder-gray-600 text-sm" placeholder="Ej: Dejar en portería..." value={datosCliente.notas} onChange={(e) => setDatosCliente({...datosCliente, notas: e.target.value})}></textarea>
               </div>
-              <div className="pt-4 flex gap-4">
-                <button type="button" onClick={() => setIsCheckoutOpen(false)} className="w-1/3 bg-transparent text-gray-400 hover:text-white font-bold py-3 rounded-xl transition-colors text-sm">CANCELAR</button>
-                <button type="submit" className="w-2/3 bg-[#25D366] hover:bg-[#20b858] text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20 text-sm tracking-wider">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clipRule="evenodd" /></svg>
+              
+              {/* Botones de Checkout arreglados: Flex column invertido en móvil, y en fila para desktop */}
+              <div className="pt-4 flex flex-col-reverse md:flex-row gap-3">
+                <button type="button" onClick={() => setIsCheckoutOpen(false)} className="w-full md:w-1/3 bg-transparent border border-gray-600 md:border-transparent text-gray-400 hover:text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                  CANCELAR
+                </button>
+                <button type="submit" className="w-full md:w-2/3 bg-[#25D366] hover:bg-[#20b858] text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20 text-sm tracking-wider">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                  </svg>
                   ENVIAR A WHATSAPP
                 </button>
               </div>
