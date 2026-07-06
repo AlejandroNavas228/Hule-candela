@@ -10,8 +10,8 @@ function App() {
   const [marcaSeleccionada, setMarcaSeleccionada] = useState('TODAS');
   const [notificacion, setNotificacion] = useState(null);
 
-  // Número de WhatsApp (Úsalo también para el botón flotante)
-  const numeroWhatsApp = "584120994977"; // Reemplaza por tu número real
+  // Número de WhatsApp 
+  const numeroWhatsApp = "584120994977"; 
 
   const marcasUnicas = ['TODAS', ...new Set(perfumes.map(p => p.marca))];
 
@@ -58,9 +58,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-4 md:p-8 relative flex flex-col overflow-x-hidden" style={{ fontFamily: "'Aileron', sans-serif" }}>
+    <div className="min-h-screen bg-[#1a1a1a] relative flex flex-col overflow-x-hidden" style={{ fontFamily: "'Aileron', sans-serif" }}>
       
-      {/* Estilos inyectados para las animaciones fluidas del Carrito */}
       <style>{`
         @keyframes slideInRight {
           from { transform: translateX(100%); }
@@ -78,33 +77,41 @@ function App() {
         }
       `}</style>
 
-      {/* Contenido Principal */}
-      <div className="flex-1">
-        {/* Cabecera (Navbar) */}
-        <nav className="flex justify-between items-center mb-8 border-b border-gray-700 pb-4 max-w-5xl mx-auto">
-          <div className="flex items-center gap-3">
-            {/* Logo optimizado: un poco más grande en móviles (h-24) para mantener presencia */}
-            <img src="/logo.svg" alt="Logo Cliente" className="h-24 md:h-40 w-auto drop-shadow-md" /> 
-          </div>
+      {/* BOTÓN DEL CARRITO FLOTANTE Y FIJO (Siempre visible al hacer scroll) */}
+      <div className="fixed top-4 right-4 md:top-6 md:right-8 z-40">
+        <button onClick={() => setIsCartOpen(true)} className="relative p-3 text-[#e5e5e5] hover:text-[#f97316] bg-[#1a1a1a]/80 backdrop-blur-md rounded-full transition-all duration-300 shadow-xl shadow-black/50 border border-gray-700 hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+          </svg>
+          {carrito.length > 0 && (
+            <span className="absolute -top-1 -right-1 bg-[#f97316] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
+              {carrito.reduce((acc, item) => acc + item.cantidad, 0)}
+            </span>
+          )}
+        </button>
+      </div>
 
-          <button onClick={() => setIsCartOpen(true)} className="relative p-2 text-[#e5e5e5] hover:text-[#f97316] transition-colors duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-            </svg>
-            {carrito.length > 0 && (
-              <span className="absolute -top-1 -right-1 bg-[#f97316] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
-                {carrito.reduce((acc, item) => acc + item.cantidad, 0)}
-              </span>
-            )}
-          </button>
-        </nav>
+      {/* 1. SECCIÓN BANNER */}
+      <div className="w-full bg-gradient-to-b from-black to-[#1a1a1a] pt-12 pb-6 md:pt-16 md:pb-10 px-4 relative flex flex-col items-center justify-center">
+        {/* Logo del Banner */}
+        <div className="max-w-4xl w-full flex justify-center animate-fade-in mt-2">
+          <img 
+            src="/logo.svg" 
+            alt="Huele Candela Banner" 
+            className="w-full max-w-[240px] md:max-w-[360px] h-auto object-contain drop-shadow-2xl" 
+          />
+        </div>
+      </div>
 
+      {/* Contenido del Catálogo */}
+      <div className="flex-1 px-4 md:p-8 mt-4">
+        
         {/* Búsqueda y Filtros */}
-        <div className="max-w-5xl mx-auto mb-10 space-y-6">
+        <div className="max-w-5xl mx-auto mb-12 space-y-6">
           <div className="relative w-full max-w-xl mx-auto">
             <input 
               type="text" placeholder="Buscar perfume..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)}
-              className="w-full bg-[#2a2a2a] text-white border border-gray-700 rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-[#f97316] transition-colors placeholder-gray-500 text-sm md:text-base"
+              className="w-full bg-[#2a2a2a] text-white border border-gray-700 rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-[#f97316] transition-colors placeholder-gray-500 text-sm md:text-base shadow-inner"
             />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 absolute left-4 top-3.5 text-gray-500">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -151,21 +158,15 @@ function App() {
         )}
       </div>
 
-      {/* FOOTER (Pie de página) */}
-      <footer className="mt-auto border-t border-gray-800 pt-10 pb-6 flex flex-col items-center justify-center w-full">
+      {/* FOOTER */}
+      <footer className="mt-auto border-t border-gray-800 pt-10 pb-6 flex flex-col items-center justify-center w-full bg-[#111]">
         <h4 className="text-[#e5e5e5] text-2xl tracking-widest mb-6 uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>HUELE CANDELA</h4>
-        
-        {/* Redes Sociales */}
         <div className="flex gap-6 mb-8">
           <a href="https://www.instagram.com/huelecandela?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#f97316] transition-colors duration-300">
-            <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-            </svg>
+            <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
           </a>
           <a href="https://www.tiktok.com/@huelecandela?_r=1&_t=ZS-97nDLwwixtM" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#f97316] transition-colors duration-300">
-            <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7">
-              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.16-3.44-3.35-3.46-5.7-.02-2.14.93-4.18 2.59-5.46 1.49-1.14 3.42-1.57 5.23-1.19.16.03.32.08.47.14v4.11c-.42-.14-.87-.2-1.31-.17-1.14.04-2.22.61-2.92 1.52-.78 1.05-.98 2.47-.53 3.69.44 1.16 1.51 2 2.75 2.22 1.25.21 2.55-.13 3.43-1.03.95-.94 1.41-2.3 1.39-3.64V0h4.21z" />
-            </svg>
+            <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.16-3.44-3.35-3.46-5.7-.02-2.14.93-4.18 2.59-5.46 1.49-1.14 3.42-1.57 5.23-1.19.16.03.32.08.47.14v4.11c-.42-.14-.87-.2-1.31-.17-1.14.04-2.22.61-2.92 1.52-.78 1.05-.98 2.47-.53 3.69.44 1.16 1.51 2 2.75 2.22 1.25.21 2.55-.13 3.43-1.03.95-.94 1.41-2.3 1.39-3.64V0h4.21z" /></svg>
           </a>
         </div>
         <p className="text-gray-600 text-xs">© {new Date().getFullYear()} Huele Candela. Todos los derechos reservados.</p>
@@ -174,10 +175,8 @@ function App() {
       {/* BOTÓN FLOTANTE WHATSAPP */}
       <a 
         href={`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent("¡Hola Huele Candela! Vengo del catálogo web y me gustaría hacer una consulta.")}`}
-        target="_blank" 
-        rel="noopener noreferrer"
+        target="_blank" rel="noopener noreferrer"
         className="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-[#25D366]/40 transition-all duration-300 z-40"
-        title="Chatea con nosotros"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-8 h-8 md:w-10 md:h-10">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
@@ -195,9 +194,7 @@ function App() {
       {/* PANEL LATERAL DEL CARRITO */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
-          {/* Fondo oscuro con fade-in */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setIsCartOpen(false)}></div>
-          {/* Panel blanco con slide-in */}
           <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-slide-in">
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
               <h2 className="text-2xl font-bold text-gray-900 tracking-wide" style={{ fontFamily: "'Extenda', sans-serif" }}>TU CARRITO</h2>
@@ -251,12 +248,8 @@ function App() {
                 <label className="block text-sm font-medium text-gray-400 mb-1">Comentarios (Opcional)</label>
                 <textarea className="w-full bg-[#2a2a2a] text-white border border-gray-600 rounded-xl p-3 h-24 focus:outline-none focus:border-[#f97316] transition-colors resize-none placeholder-gray-600 text-sm" placeholder="Ej: Dejar en portería..." value={datosCliente.notas} onChange={(e) => setDatosCliente({...datosCliente, notas: e.target.value})}></textarea>
               </div>
-              
-              {/* Botones de Checkout arreglados: Flex column invertido en móvil, y en fila para desktop */}
               <div className="pt-4 flex flex-col-reverse md:flex-row gap-3">
-                <button type="button" onClick={() => setIsCheckoutOpen(false)} className="w-full md:w-1/3 bg-transparent border border-gray-600 md:border-transparent text-gray-400 hover:text-white font-bold py-3 rounded-xl transition-colors text-sm">
-                  CANCELAR
-                </button>
+                <button type="button" onClick={() => setIsCheckoutOpen(false)} className="w-full md:w-1/3 bg-transparent border border-gray-600 md:border-transparent text-gray-400 hover:text-white font-bold py-3 rounded-xl transition-colors text-sm">CANCELAR</button>
                 <button type="submit" className="w-full md:w-2/3 bg-[#25D366] hover:bg-[#20b858] text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20 text-sm tracking-wider">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
