@@ -1,5 +1,53 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { perfumes } from './productos';
+
+// ---- Utilidades ----
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const parsePrecio = (v) => (v ? parseFloat(v.replace(/\./g, '').replace(',', '.')) : 0);
+const mostrarPrecio = (v) => (v ? `$${v}` : 'Consultar');
+
+// ---- Componente de aparición al hacer scroll ----
+function Reveal({ children, className = '', delay = 0 }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.08 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`${className} transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ---- Imagen decorativa (silueta fantasma sobre el fondo oscuro) ----
+function Adorno({ src, className = '' }) {
+  return (
+    <img
+      src={src}
+      alt=""
+      aria-hidden="true"
+      className={`absolute pointer-events-none select-none mix-blend-screen opacity-[0.06] blur-[2px] animate-flotar ${className}`}
+      style={{ filter: 'invert(1) grayscale(1)' }}
+    />
+  );
+}
 
 function App() {
   const [carrito, setCarrito] = useState([]);
@@ -8,31 +56,40 @@ function App() {
   const [datosCliente, setDatosCliente] = useState({ nombre: '', direccion: '', notas: '' });
   const [busqueda, setBusqueda] = useState('');
   const [marcaSeleccionada, setMarcaSeleccionada] = useState('TODAS');
+  const [modoPrecio, setModoPrecio] = useState('detal'); // 'detal' | 'mayor'
+  const [detalle, setDetalle] = useState(null);
   const [notificacion, setNotificacion] = useState(null);
 
-  // Número de WhatsApp 
-  const numeroWhatsApp = "584120994977"; 
+  // Número de WhatsApp
+  const numeroWhatsApp = "584120994977";
 
   const marcasUnicas = ['TODAS', ...new Set(perfumes.map(p => p.marca))];
-  const conteoPorMarca = perfumes.reduce((acc, p) => {
-    acc[p.marca] = (acc[p.marca] || 0) + 1;
-    return acc;
-  }, {});
+
+  const precioActivo = (p) => (modoPrecio === 'detal' ? p.precioDetal : p.precioMayor);
 
   const perfumesFiltrados = perfumes.filter((perfume) => {
-    const coincideBusqueda = perfume.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    const q = norm(busqueda);
+    const coincideBusqueda = !q || norm(perfume.nombre).includes(q) || norm(perfume.marca).includes(q);
     const coincideMarca = marcaSeleccionada === 'TODAS' || perfume.marca === marcaSeleccionada;
     return coincideBusqueda && coincideMarca;
   });
 
+  // Agrupar por marca (manteniendo el orden de productos.js)
+  const gruposPorMarca = perfumesFiltrados.reduce((acc, p) => {
+    if (!acc[p.marca]) acc[p.marca] = [];
+    acc[p.marca].push(p);
+    return acc;
+  }, {});
+  const mostrarSecciones = marcaSeleccionada === 'TODAS' && !busqueda;
+
   const agregarAlCarrito = (perfume) => {
+    const precioAplicado = precioActivo(perfume);
     const productoExistente = carrito.find(item => item.id === perfume.id);
     if (productoExistente) {
       setCarrito(carrito.map(item => item.id === perfume.id ? { ...item, cantidad: item.cantidad + 1 } : item));
     } else {
-      setCarrito([...carrito, { ...perfume, cantidad: 1 }]);
+      setCarrito([...carrito, { ...perfume, cantidad: 1, precioAplicado }]);
     }
-    
     setNotificacion(`${perfume.nombre} añadido`);
     setTimeout(() => setNotificacion(null), 3000);
   };
@@ -41,29 +98,58 @@ function App() {
     setCarrito(carrito.filter(item => item.id !== id));
   };
 
-  const total = carrito.reduce((acc, item) => {
-    const precioNumerico = parseFloat(item.precio.replace('.', ''));
-    return acc + (precioNumerico * item.cantidad);
-  }, 0);
+  const total = carrito.reduce((acc, item) => acc + parsePrecio(item.precioAplicado) * item.cantidad, 0);
   const totalFormateado = total.toLocaleString('es-ES');
+  const hayPreciosPendientes = carrito.some(item => !item.precioAplicado);
 
   const handleCheckout = (e) => {
     e.preventDefault();
     let mensaje = `🔥 *¡Hola Huele Candela! Quiero hacer un pedido:*\n\n`;
     carrito.forEach(item => {
-      mensaje += `▪️ ${item.cantidad}x ${item.nombre} ($${item.precio})\n`;
+      const p = item.precioAplicado ? `$${item.precioAplicado}` : 'precio a consultar';
+      mensaje += `▪️ ${item.cantidad}x ${item.nombre} (${p})\n`;
     });
-    mensaje += `\n💰 *Total a pagar:* $${totalFormateado}\n\n`;
+    mensaje += `\n💰 *Total a pagar:* $${totalFormateado}${hayPreciosPendientes ? ' (+ productos a consultar)' : ''}\n`;
+    mensaje += `🏷️ *Modalidad:* ${modoPrecio === 'detal' ? 'Al detal' : 'Al mayor'}\n\n`;
     mensaje += `📦 *Mis datos de envío:*\n👤 Nombre: ${datosCliente.nombre}\n📍 Dirección: ${datosCliente.direccion}\n`;
-    if(datosCliente.notas) mensaje += `📝 Notas: ${datosCliente.notas}\n`;
+    if (datosCliente.notas) mensaje += `📝 Notas: ${datosCliente.notas}\n`;
 
     const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
   };
 
+  const consultarPorWhatsApp = (perfume) => {
+    const mensaje = `¡Hola Huele Candela! 👋 Me interesa el perfume *${perfume.nombre}* de *${perfume.marca}*. ¿Me pueden dar más información?`;
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  };
+
+  // ---- Tarjeta de producto ----
+  const TarjetaPerfume = ({ perfume }) => (
+    <div className="flex flex-col group cursor-pointer" onClick={() => setDetalle(perfume)}>
+      <div className="bg-white rounded-3xl p-5 md:p-7 aspect-square flex items-center justify-center mb-4 shadow-lg transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-[#f97316]/20 overflow-hidden">
+        <img src={perfume.imagen} alt={perfume.nombre} loading="lazy" className="object-contain h-full w-full drop-shadow-md transition-transform duration-300 group-hover:scale-110 mix-blend-multiply" />
+      </div>
+      <div className="flex justify-between items-start gap-2 px-1">
+        <div className="flex-1">
+          <p className="text-gray-500 text-[10px] md:text-xs tracking-[0.2em] uppercase">{perfume.marca}</p>
+          <h3 className="text-[#e5e5e5] text-xl md:text-2xl uppercase leading-none tracking-wide mt-1" style={{ fontFamily: "'Extenda', sans-serif" }}>{perfume.nombre}</h3>
+          <p className="text-[#f97316] font-bold text-sm md:text-base mt-2 tracking-widest" style={{ fontFamily: "'Aileron', sans-serif" }}>{mostrarPrecio(precioActivo(perfume))}</p>
+        </div>
+        <button
+          onClick={(e) => { e.stopPropagation(); agregarAlCarrito(perfume); }}
+          className="mt-2 p-2 text-gray-500 hover:text-[#f97316] transition-colors duration-300 rounded-full hover:bg-[#f97316]/10 flex items-center justify-center"
+          title="Añadir al carrito"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-[#1a1a1a] relative flex flex-col overflow-x-hidden" style={{ fontFamily: "'Aileron', sans-serif" }}>
-      
+
       <style>{`
         @keyframes slideInRight {
           from { transform: translateX(100%); }
@@ -73,15 +159,30 @@ function App() {
           from { opacity: 0; }
           to { opacity: 1; }
         }
+        @keyframes logoFocus {
+          0% { opacity: 0; filter: blur(24px); transform: scale(1.1); }
+          60% { opacity: 1; }
+          100% { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+        @keyframes flotar {
+          0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+          50% { transform: translateY(-18px) rotate(var(--rot, 0deg)); }
+        }
         .animate-slide-in {
           animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .animate-fade-in {
           animation: fadeIn 0.3s ease-out forwards;
         }
+        .animate-logo-focus {
+          animation: logoFocus 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .animate-flotar {
+          animation: flotar 9s ease-in-out infinite;
+        }
       `}</style>
 
-      {/* BOTÓN DEL CARRITO FLOTANTE Y FIJO (Siempre visible al hacer scroll) */}
+      {/* BOTÓN DEL CARRITO FLOTANTE Y FIJO */}
       <div className="fixed top-4 right-4 md:top-6 md:right-8 z-40">
         <button onClick={() => setIsCartOpen(true)} className="relative p-3 text-[#e5e5e5] hover:text-[#f97316] bg-[#1a1a1a]/80 backdrop-blur-md rounded-full transition-all duration-300 shadow-xl shadow-black/50 border border-gray-700 hover:scale-105">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -95,34 +196,72 @@ function App() {
         </button>
       </div>
 
-      {/* 1. SECCIÓN BANNER */}
-      <div className="w-full bg-gradient-to-b from-black to-[#1a1a1a] pt-12 pb-6 md:pt-16 md:pb-10 px-4 relative flex flex-col items-center justify-center">
-        {/* Logo del Banner */}
-        <div className="max-w-4xl w-full flex justify-center animate-fade-in mt-2">
-          <img 
-            src="/logo.svg" 
-            alt="Huele Candela Banner" 
-            className="w-full max-w-[240px] md:max-w-[360px] h-auto object-contain drop-shadow-2xl" 
-          />
-        </div>
-      </div>
+      {/* 1. HERO A PANTALLA COMPLETA */}
+      <section className="relative w-full h-[100svh] bg-gradient-to-b from-black via-black to-[#1a1a1a] flex flex-col items-center justify-center overflow-hidden">
+        {/* Adornos: siluetas de perfumes flotando */}
+        <Adorno src="/lattafa-khamrah.jpeg" className="w-40 md:w-64 -left-6 top-[12%]" />
+        <Adorno src="/armaf-club-de-nuit-intense-man.jpeg" className="w-36 md:w-56 -right-4 top-[18%] [--rot:8deg]" />
+        <Adorno src="/yara.webp" className="w-32 md:w-52 left-[8%] bottom-[10%] [--rot:-6deg]" />
+        <Adorno src="/jean-paul-gaultier-le-male.jpeg" className="w-32 md:w-48 right-[10%] bottom-[14%] [--rot:5deg]" />
 
-      {/* Contenido del Catálogo */}
-      <div className="flex-1 px-4 md:p-8 mt-4">
-        
-        {/* Búsqueda y Filtros */}
-        <div className="max-w-5xl mx-auto mb-12 space-y-6">
-          <div className="relative w-full max-w-xl mx-auto">
-            <input 
-              type="text" placeholder="Buscar perfume..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)}
-              className="w-full bg-[#2a2a2a] text-white border border-gray-700 rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-[#f97316] transition-colors placeholder-gray-500 text-sm md:text-base shadow-inner"
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 absolute left-4 top-3.5 text-gray-500">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
+        {/* Resplandor suave */}
+        <div className="absolute w-[480px] h-[480px] rounded-full bg-[#f97316]/10 blur-[140px]"></div>
+
+        {/* Logo con enfoque progresivo */}
+        <div className="relative z-10 flex flex-col items-center px-6">
+          <img
+            src="/logo.svg"
+            alt="Huele Candela"
+            className="w-full max-w-[280px] md:max-w-[420px] h-auto object-contain drop-shadow-2xl animate-logo-focus"
+          />
+          <p className="text-gray-400 text-xs md:text-sm tracking-[0.35em] uppercase mt-8 opacity-0 animate-fade-in" style={{ animationDelay: '1.2s', animationDuration: '1s', animationFillMode: 'forwards' }}>
+            Catálogo de perfumes
+          </p>
+        </div>
+
+        {/* Indicador de scroll */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 animate-fade-in" style={{ animationDelay: '1.8s', animationDuration: '1s', animationFillMode: 'forwards' }}>
+          <span className="text-gray-500 text-[10px] tracking-[0.3em] uppercase">Desliza</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-[#f97316] animate-bounce">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+      </section>
+
+      {/* 2. BARRA DE BÚSQUEDA Y FILTROS (fija al hacer scroll) */}
+      <div className="sticky top-0 z-30 bg-[#1a1a1a]/90 backdrop-blur-md border-b border-gray-800/60 py-4 px-4">
+        <div className="max-w-6xl mx-auto space-y-4">
+          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4">
+            {/* Búsqueda */}
+            <div className="relative w-full md:flex-1 max-w-xl">
+              <input
+                type="text" placeholder="Buscar por nombre o marca..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)}
+                className="w-full bg-[#2a2a2a] text-white border border-gray-700 rounded-full py-3 px-6 pl-12 focus:outline-none focus:border-[#f97316] transition-colors placeholder-gray-500 text-sm shadow-inner"
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 absolute left-4 top-3.5 text-gray-500">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+              {busqueda && (
+                <button onClick={() => setBusqueda('')} className="absolute right-4 top-3.5 text-gray-500 hover:text-[#f97316] transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              )}
+            </div>
+
+            {/* Toggle Detal / Mayor */}
+            <div className="flex items-center bg-[#2a2a2a] border border-gray-700 rounded-full p-1 flex-shrink-0">
+              {['detal', 'mayor'].map(modo => (
+                <button key={modo} onClick={() => setModoPrecio(modo)}
+                  className={`px-5 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
+                    modoPrecio === modo ? 'bg-[#f97316] text-white shadow-md shadow-orange-500/20' : 'text-gray-400 hover:text-[#e5e5e5]'
+                  }`}
+                >{modo === 'detal' ? 'Al detal' : 'Al mayor'}</button>
+              ))}
+            </div>
           </div>
 
-          <div className="relative max-w-5xl mx-auto">
+          {/* Filtro de marcas con scroll lateral */}
+          <div className="relative">
             <div className="flex gap-3 overflow-x-auto whitespace-nowrap px-1 py-1 scrollbar-hide">
               {marcasUnicas.map(marca => (
                 <button key={marca} onClick={() => setMarcaSeleccionada(marca)}
@@ -134,32 +273,54 @@ function App() {
             </div>
           </div>
         </div>
+      </div>
 
-        <h1 className="text-[#e5e5e5] text-5xl md:text-7xl text-center mb-10 tracking-wider uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>
-          {marcaSeleccionada === 'TODAS' ? 'NUESTRA COLECCIÓN' : marcaSeleccionada}
-        </h1>
+      {/* 3. CONTENIDO DEL CATÁLOGO */}
+      <div className="flex-1 px-4 md:px-8 mt-14 relative">
 
-        {/* Cuadrícula de Productos */}
+        {/* Adornos entre secciones */}
+        <Adorno src="/versace-eros.jpeg" className="w-44 md:w-72 -left-10 top-[20%] [--rot:-8deg] hidden md:block" />
+        <Adorno src="/afnan-9pm.jpeg" className="w-44 md:w-72 -right-12 top-[55%] [--rot:7deg] hidden md:block" />
+        <Adorno src="/carolina-herrera-212-vip-black.jpeg" className="w-40 md:w-64 -left-8 top-[80%] [--rot:5deg] hidden md:block" />
+
         {perfumesFiltrados.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg mt-12">No se encontraron perfumes.</p>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 max-w-5xl mx-auto mb-20">
-            {perfumesFiltrados.map((perfume) => (
-              <div key={perfume.id} className="flex flex-col group">
-                <div className="bg-white rounded-3xl p-4 md:p-6 aspect-square flex items-center justify-center mb-3 shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-[#f97316]/20 overflow-hidden cursor-pointer">
-                  <img src={perfume.imagen} alt={perfume.nombre} className="object-contain h-full w-full drop-shadow-md transition-transform duration-300 group-hover:scale-110 mix-blend-multiply" />
-                </div>
-                <div className="flex justify-between items-start gap-2 px-1">
-                  <div className="flex-1 cursor-pointer">
-                    <h3 className="text-[#e5e5e5] text-xl md:text-2xl uppercase leading-none tracking-wide mt-2" style={{ fontFamily: "'Extenda', sans-serif" }}>{perfume.nombre}</h3>
-                    <p className="text-[#f97316] font-bold text-sm md:text-base mt-1 tracking-widest" style={{ fontFamily: "'Aileron', sans-serif" }}>${perfume.precio}</p>
+          <p className="text-center text-gray-500 text-lg mt-12 mb-24">No se encontraron perfumes.</p>
+        ) : mostrarSecciones ? (
+          /* --- Vista por secciones: cada marca con su espacio --- */
+          <div className="max-w-6xl mx-auto space-y-24 md:space-y-32 mb-28 relative">
+            {Object.entries(gruposPorMarca).map(([marca, items]) => (
+              <Reveal key={marca}>
+                <section>
+                  <div className="flex items-end justify-between mb-8 md:mb-10">
+                    <div>
+                      <h2 className="text-[#e5e5e5] text-4xl md:text-6xl uppercase tracking-wider leading-none" style={{ fontFamily: "'Extenda', sans-serif" }}>{marca}</h2>
+                      <div className="h-[3px] w-16 bg-[#f97316] rounded-full mt-3"></div>
+                    </div>
+                    <span className="text-gray-500 text-xs md:text-sm tracking-widest uppercase pb-1">{items.length} {items.length === 1 ? 'perfume' : 'perfumes'}</span>
                   </div>
-                  <button onClick={() => agregarAlCarrito(perfume)} className="mt-2 p-2 text-gray-500 hover:text-[#f97316] transition-colors duration-300 rounded-full hover:bg-[#f97316]/10 flex items-center justify-center" title="Añadir al carrito">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                  </button>
-                </div>
-              </div>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10 md:gap-x-8 md:gap-y-14">
+                    {items.map((perfume) => (
+                      <TarjetaPerfume key={perfume.id} perfume={perfume} />
+                    ))}
+                  </div>
+                </section>
+              </Reveal>
             ))}
+          </div>
+        ) : (
+          /* --- Vista filtrada: una sola cuadrícula --- */
+          <div className="max-w-6xl mx-auto mb-28">
+            <Reveal>
+              <h1 className="text-[#e5e5e5] text-5xl md:text-7xl text-center mb-4 tracking-wider uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>
+                {marcaSeleccionada === 'TODAS' ? 'RESULTADOS' : marcaSeleccionada}
+              </h1>
+              <p className="text-center text-gray-500 text-xs tracking-[0.3em] uppercase mb-12">{perfumesFiltrados.length} {perfumesFiltrados.length === 1 ? 'perfume' : 'perfumes'}</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10 md:gap-x-8 md:gap-y-14">
+                {perfumesFiltrados.map((perfume) => (
+                  <TarjetaPerfume key={perfume.id} perfume={perfume} />
+                ))}
+              </div>
+            </Reveal>
           </div>
         )}
       </div>
@@ -179,7 +340,7 @@ function App() {
       </footer>
 
       {/* BOTÓN FLOTANTE WHATSAPP */}
-      <a 
+      <a
         href={`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent("¡Hola Huele Candela! Vengo del catálogo web y me gustaría hacer una consulta.")}`}
         target="_blank" rel="noopener noreferrer"
         className="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-[#25D366]/40 transition-all duration-300 z-40"
@@ -194,6 +355,66 @@ function App() {
         <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-[#f97316] text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold tracking-wider flex items-center gap-2 animate-fade-in">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
           {notificacion}
+        </div>
+      )}
+
+      {/* MODAL DE DETALLE DE PRODUCTO */}
+      {detalle && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" onClick={() => setDetalle(null)}></div>
+          <div className="relative w-full max-w-3xl bg-[#1f1f1f] border border-gray-700/70 rounded-3xl shadow-2xl animate-fade-in overflow-hidden max-h-[92svh] overflow-y-auto">
+            <button onClick={() => setDetalle(null)} className="absolute top-4 right-4 z-10 p-2 text-gray-400 hover:text-[#f97316] bg-black/30 backdrop-blur-sm rounded-full transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+
+            <div className="grid md:grid-cols-2">
+              {/* Imagen */}
+              <div className="bg-white flex items-center justify-center p-8 md:p-12 min-h-[280px] md:min-h-[420px]">
+                <img src={detalle.imagen} alt={detalle.nombre} className="object-contain max-h-[240px] md:max-h-[360px] w-full mix-blend-multiply drop-shadow-lg" />
+              </div>
+
+              {/* Información */}
+              <div className="p-7 md:p-10 flex flex-col">
+                <p className="text-[#f97316] text-xs tracking-[0.3em] uppercase font-bold">{detalle.marca}</p>
+                <h2 className="text-[#e5e5e5] text-4xl md:text-5xl uppercase leading-none tracking-wide mt-2" style={{ fontFamily: "'Extenda', sans-serif" }}>{detalle.nombre}</h2>
+
+                {detalle.descripcion && (
+                  <p className="text-gray-400 text-sm leading-relaxed mt-5">{detalle.descripcion}</p>
+                )}
+
+                {/* Precios */}
+                <div className="mt-6 space-y-3">
+                  <div className={`flex items-center justify-between rounded-2xl border px-5 py-3.5 transition-colors ${modoPrecio === 'detal' ? 'border-[#f97316]/60 bg-[#f97316]/5' : 'border-gray-700 bg-[#2a2a2a]/50'}`}>
+                    <span className="text-gray-400 text-xs tracking-widest uppercase">Al detal</span>
+                    <span className={`font-bold tracking-widest ${modoPrecio === 'detal' ? 'text-[#f97316]' : 'text-[#e5e5e5]'}`}>{mostrarPrecio(detalle.precioDetal)}</span>
+                  </div>
+                  <div className={`flex items-center justify-between rounded-2xl border px-5 py-3.5 transition-colors ${modoPrecio === 'mayor' ? 'border-[#f97316]/60 bg-[#f97316]/5' : 'border-gray-700 bg-[#2a2a2a]/50'}`}>
+                    <span className="text-gray-400 text-xs tracking-widest uppercase">Al mayor</span>
+                    <span className={`font-bold tracking-widest ${modoPrecio === 'mayor' ? 'text-[#f97316]' : 'text-[#e5e5e5]'}`}>{mostrarPrecio(detalle.precioMayor)}</span>
+                  </div>
+                </div>
+
+                {/* Acciones */}
+                <div className="mt-8 space-y-3">
+                  <button
+                    onClick={() => { agregarAlCarrito(detalle); }}
+                    className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-orange-500/20 tracking-wider text-sm"
+                  >
+                    AÑADIR AL CARRITO
+                  </button>
+                  <button
+                    onClick={() => consultarPorWhatsApp(detalle)}
+                    className="w-full bg-transparent border border-[#25D366]/60 text-[#25D366] hover:bg-[#25D366] hover:text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 text-sm tracking-wider"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    CONSULTAR POR WHATSAPP
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -215,7 +436,7 @@ function App() {
                     <div className="w-20 h-20 bg-gray-100 rounded-xl p-2 flex-shrink-0"><img src={item.imagen} alt={item.nombre} className="w-full h-full object-contain mix-blend-multiply" /></div>
                     <div className="flex-1">
                       <h4 className="font-bold text-gray-900 text-sm md:text-base leading-tight" style={{ fontFamily: "'Extenda', sans-serif" }}>{item.nombre}</h4>
-                      <p className="text-[#f97316] font-bold text-xs md:text-sm mt-1" style={{ fontFamily: "'Aileron', sans-serif" }}>${item.precio}</p>
+                      <p className="text-[#f97316] font-bold text-xs md:text-sm mt-1" style={{ fontFamily: "'Aileron', sans-serif" }}>{item.precioAplicado ? `$${item.precioAplicado}` : 'Consultar'}</p>
                       <p className="text-xs text-gray-500 mt-1">Cantidad: {item.cantidad}</p>
                     </div>
                     <button onClick={() => eliminarDelCarrito(item.id)} className="text-red-400 hover:text-red-600"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg></button>
@@ -225,17 +446,20 @@ function App() {
             </div>
             {carrito.length > 0 && (
               <div className="p-6 border-t border-gray-200 bg-gray-50">
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center mb-2">
                   <span className="text-lg font-bold text-gray-900">Total:</span><span className="text-2xl font-bold text-[#f97316]" style={{ fontFamily: "'Aileron', sans-serif" }}>${totalFormateado}</span>
                 </div>
-                <button onClick={() => { setIsCartOpen(false); setIsCheckoutOpen(true); }} className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-orange-500/30 tracking-wider text-sm">FINALIZAR PEDIDO</button>
+                {hayPreciosPendientes && (
+                  <p className="text-xs text-gray-500 mb-4">* Algunos productos tienen precio a consultar y no están incluidos en el total.</p>
+                )}
+                <button onClick={() => { setIsCartOpen(false); setIsCheckoutOpen(true); }} className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-orange-500/30 tracking-wider text-sm mt-2">FINALIZAR PEDIDO</button>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* MODAL DE CHECKOUT REDISEÑADO */}
+      {/* MODAL DE CHECKOUT */}
       {isCheckoutOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" onClick={() => setIsCheckoutOpen(false)}></div>
