@@ -43,7 +43,7 @@ function Adorno({ src, className = '' }) {
       src={src}
       alt=""
       aria-hidden="true"
-      className={`absolute pointer-events-none select-none mix-blend-screen opacity-[0.06] blur-[2px] animate-flotar ${className}`}
+      className={`absolute pointer-events-none select-none mix-blend-screen opacity-[0.16] blur-[1px] animate-flotar ${className}`}
       style={{ filter: 'invert(1) grayscale(1)' }}
     />
   );
@@ -127,8 +127,9 @@ function App() {
   // ---- Tarjeta de producto ----
   const TarjetaPerfume = ({ perfume }) => (
     <div className="flex flex-col group cursor-pointer" onClick={() => setDetalle(perfume)}>
-      <div className="bg-white rounded-3xl p-5 md:p-7 aspect-square flex items-center justify-center mb-4 shadow-lg transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-[#f97316]/20 overflow-hidden">
-        <img src={perfume.imagen} alt={perfume.nombre} loading="lazy" className="object-contain h-full w-full drop-shadow-md transition-transform duration-300 group-hover:scale-110 mix-blend-multiply" />
+      <div className="relative bg-gradient-to-b from-[#2a2a2a] to-[#1f1f1f] border border-gray-800 rounded-3xl p-5 md:p-7 aspect-square flex items-center justify-center mb-4 shadow-lg transition-all duration-300 group-hover:-translate-y-2 group-hover:border-[#f97316]/40 group-hover:shadow-[#f97316]/10 overflow-hidden">
+        <div className="absolute w-2/3 h-2/3 rounded-full bg-white/[0.04] blur-2xl"></div>
+        <img src={perfume.imagen} alt={perfume.nombre} loading="lazy" className="relative object-contain h-full w-full drop-shadow-[0_12px_16px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
       </div>
       <div className="flex justify-between items-start gap-2 px-1">
         <div className="flex-1">
@@ -199,10 +200,10 @@ function App() {
       {/* 1. HERO A PANTALLA COMPLETA */}
       <section className="relative w-full h-[100svh] bg-gradient-to-b from-black via-black to-[#1a1a1a] flex flex-col items-center justify-center overflow-hidden">
         {/* Adornos: siluetas de perfumes flotando */}
-        <Adorno src="/lattafa-khamrah.jpeg" className="w-40 md:w-64 -left-6 top-[12%]" />
-        <Adorno src="/armaf-club-de-nuit-intense-man.jpeg" className="w-36 md:w-56 -right-4 top-[18%] [--rot:8deg]" />
-        <Adorno src="/yara.webp" className="w-32 md:w-52 left-[8%] bottom-[10%] [--rot:-6deg]" />
-        <Adorno src="/jean-paul-gaultier-le-male.jpeg" className="w-32 md:w-48 right-[10%] bottom-[14%] [--rot:5deg]" />
+        <Adorno src="/img/lattafa-khamrah.png" className="w-40 md:w-64 -left-6 top-[12%]" />
+        <Adorno src="/img/armaf-club-de-nuit-intense-man.png" className="w-36 md:w-56 -right-4 top-[18%] [--rot:8deg]" />
+        <Adorno src="/img/yara.png" className="w-32 md:w-52 left-[8%] bottom-[10%] [--rot:-6deg]" />
+        <Adorno src="/img/jean-paul-gaultier-le-male.png" className="w-32 md:w-48 right-[10%] bottom-[14%] [--rot:5deg]" />
 
         {/* Resplandor suave */}
         <div className="absolute w-[480px] h-[480px] rounded-full bg-[#f97316]/10 blur-[140px]"></div>
@@ -279,9 +280,9 @@ function App() {
       <div className="flex-1 px-4 md:px-8 mt-14 relative">
 
         {/* Adornos entre secciones */}
-        <Adorno src="/versace-eros.jpeg" className="w-44 md:w-72 -left-10 top-[20%] [--rot:-8deg] hidden md:block" />
-        <Adorno src="/afnan-9pm.jpeg" className="w-44 md:w-72 -right-12 top-[55%] [--rot:7deg] hidden md:block" />
-        <Adorno src="/carolina-herrera-212-vip-black.jpeg" className="w-40 md:w-64 -left-8 top-[80%] [--rot:5deg] hidden md:block" />
+        <Adorno src="/img/versace-eros.png" className="w-44 md:w-72 -left-10 top-[20%] [--rot:-8deg] hidden md:block" />
+        <Adorno src="/img/afnan-9pm.png" className="w-44 md:w-72 -right-12 top-[55%] [--rot:7deg] hidden md:block" />
+        <Adorno src="/img/carolina-herrera-212-vip-black.png" className="w-40 md:w-64 -left-8 top-[80%] [--rot:5deg] hidden md:block" />
 
         {perfumesFiltrados.length === 0 ? (
           <p className="text-center text-gray-500 text-lg mt-12 mb-24">No se encontraron perfumes.</p>
@@ -369,8 +370,9 @@ function App() {
 
             <div className="grid md:grid-cols-2">
               {/* Imagen */}
-              <div className="bg-white flex items-center justify-center p-8 md:p-12 min-h-[280px] md:min-h-[420px]">
-                <img src={detalle.imagen} alt={detalle.nombre} className="object-contain max-h-[240px] md:max-h-[360px] w-full mix-blend-multiply drop-shadow-lg" />
+              <div className="relative bg-gradient-to-b from-[#2a2a2a] to-[#1a1a1a] flex items-center justify-center p-8 md:p-12 min-h-[280px] md:min-h-[420px] overflow-hidden">
+                <div className="absolute w-3/4 h-3/4 rounded-full bg-[#f97316]/[0.07] blur-3xl"></div>
+                <img src={detalle.imagen} alt={detalle.nombre} className="relative object-contain max-h-[240px] md:max-h-[360px] w-full drop-shadow-[0_20px_30px_rgba(0,0,0,0.6)]" />
               </div>
 
               {/* Información */}
@@ -433,7 +435,7 @@ function App() {
               ) : (
                 carrito.map((item) => (
                   <div key={item.id} className="flex gap-4 items-center">
-                    <div className="w-20 h-20 bg-gray-100 rounded-xl p-2 flex-shrink-0"><img src={item.imagen} alt={item.nombre} className="w-full h-full object-contain mix-blend-multiply" /></div>
+                    <div className="w-20 h-20 bg-gray-100 rounded-xl p-2 flex-shrink-0"><img src={item.imagen} alt={item.nombre} className="w-full h-full object-contain" /></div>
                     <div className="flex-1">
                       <h4 className="font-bold text-gray-900 text-sm md:text-base leading-tight" style={{ fontFamily: "'Extenda', sans-serif" }}>{item.nombre}</h4>
                       <p className="text-[#f97316] font-bold text-xs md:text-sm mt-1" style={{ fontFamily: "'Aileron', sans-serif" }}>{item.precioAplicado ? `$${item.precioAplicado}` : 'Consultar'}</p>
