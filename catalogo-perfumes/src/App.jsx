@@ -14,6 +14,10 @@ function App() {
   const numeroWhatsApp = "584120994977"; 
 
   const marcasUnicas = ['TODAS', ...new Set(perfumes.map(p => p.marca))];
+  const conteoPorMarca = perfumes.reduce((acc, p) => {
+    acc[p.marca] = (acc[p.marca] || 0) + 1;
+    return acc;
+  }, {});
 
   const perfumesFiltrados = perfumes.filter((perfume) => {
     const coincideBusqueda = perfume.nombre.toLowerCase().includes(busqueda.toLowerCase());
@@ -118,14 +122,21 @@ function App() {
             </svg>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-3">
-            {marcasUnicas.map(marca => (
-              <button key={marca} onClick={() => setMarcaSeleccionada(marca)}
-                className={`px-5 py-2 rounded-full text-xs md:text-sm font-bold tracking-wider transition-all duration-300 ${
-                  marcaSeleccionada === marca ? 'bg-[#f97316] text-white shadow-lg shadow-orange-500/30' : 'bg-transparent border border-gray-600 text-gray-400 hover:border-[#f97316] hover:text-[#f97316]'
-                }`}
-              >{marca}</button>
-            ))}
+          <div className="relative w-full max-w-xs mx-auto">
+            <select
+              value={marcaSeleccionada}
+              onChange={(e) => setMarcaSeleccionada(e.target.value)}
+              className="w-full appearance-none bg-[#2a2a2a] text-[#e5e5e5] border border-gray-700 rounded-full py-3 pl-6 pr-11 text-xs md:text-sm font-bold tracking-wider focus:outline-none focus:border-[#f97316] transition-colors shadow-inner cursor-pointer"
+            >
+              {marcasUnicas.map(marca => (
+                <option key={marca} value={marca} className="bg-[#2a2a2a] text-white">
+                  {marca === 'TODAS' ? `TODAS LAS MARCAS (${perfumes.length})` : `${marca} (${conteoPorMarca[marca]})`}
+                </option>
+              ))}
+            </select>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 absolute right-5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
           </div>
         </div>
 
