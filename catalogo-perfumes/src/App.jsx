@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { perfumes } from './productos';
 
 // ---- Utilidades ----
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-const parsePrecio = (v) => (v ? parseFloat(v.replace(/\./g, '').replace(',', '.')) : 0);
-const mostrarPrecio = (v) => (v ? `$${v}` : 'Consultar');
+const parsePrecio = (v) => (v ? parseFloat(String(v).replace(',', '.')) : 0);
+const mostrarPrecio = (v) => (v ? `$${parsePrecio(v).toFixed(2)}` : 'Consultar');
 
 // ---- Componente de aparición al hacer scroll ----
 function Reveal({ children, className = '', delay = 0 }) {
@@ -36,16 +36,70 @@ function Reveal({ children, className = '', delay = 0 }) {
   );
 }
 
-// ---- Imagen decorativa (silueta fantasma sobre el fondo oscuro) ----
-function Adorno({ src, className = '' }) {
+// ---- Imagen decorativa (silueta fantasma con parallax opcional) ----
+function Adorno({ src, className = '', speed = 0 }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!speed) return;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        if (ref.current) ref.current.style.transform = `translateY(${window.scrollY * speed}px)`;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [speed]);
   return (
-    <img
-      src={src}
-      alt=""
-      aria-hidden="true"
-      className={`absolute pointer-events-none select-none mix-blend-screen opacity-[0.16] blur-[1px] animate-flotar ${className}`}
-      style={{ filter: 'invert(1) grayscale(1)' }}
-    />
+    <span ref={ref} aria-hidden="true" className={`absolute pointer-events-none select-none ${className}`}>
+      <img
+        src={src}
+        alt=""
+        className="w-full mix-blend-screen opacity-[0.16] blur-[1px] animate-flotar"
+        style={{ filter: 'invert(1) grayscale(1)' }}
+      />
+    </span>
+  );
+}
+
+// ---- Fondo dinámico: orbes de luz + chispas de candela ----
+function FondoDinamico() {
+  const chispas = useMemo(
+    () =>
+      Array.from({ length: 16 }, (_, i) => ({
+        left: (i * 61 + 9) % 100,
+        delay: (i * 1.9) % 14,
+        dur: 10 + ((i * 2.7) % 11),
+        size: 2 + ((i * 5) % 4),
+      })),
+    []
+  );
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div className="orbe orbe-a"></div>
+      <div className="orbe orbe-b"></div>
+      <div className="orbe orbe-c"></div>
+      {chispas.map((c, i) => (
+        <span
+          key={i}
+          className="chispa"
+          style={{
+            left: `${c.left}%`,
+            width: `${c.size}px`,
+            height: `${c.size}px`,
+            animationDelay: `${c.delay}s`,
+            animationDuration: `${c.dur}s`,
+          }}
+        />
+      ))}
+      <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.45) 100%)' }}></div>
+    </div>
   );
 }
 
@@ -181,7 +235,66 @@ function App() {
         .animate-flotar {
           animation: flotar 9s ease-in-out infinite;
         }
+        .orbe {
+          position: absolute;
+          border-radius: 9999px;
+          filter: blur(90px);
+          will-change: transform;
+        }
+        .orbe-a {
+          width: 520px; height: 520px;
+          background: radial-gradient(circle, rgba(249,115,22,0.13), transparent 70%);
+          top: -8%; left: -10%;
+          animation: orbita-a 38s ease-in-out infinite;
+        }
+        .orbe-b {
+          width: 440px; height: 440px;
+          background: radial-gradient(circle, rgba(249,115,22,0.09), transparent 70%);
+          bottom: 4%; right: -8%;
+          animation: orbita-b 46s ease-in-out infinite;
+        }
+        .orbe-c {
+          width: 380px; height: 380px;
+          background: radial-gradient(circle, rgba(229,229,229,0.06), transparent 70%);
+          top: 42%; left: 32%;
+          animation: orbita-c 52s ease-in-out infinite;
+        }
+        @keyframes orbita-a {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(16vw, 14vh) scale(1.15); }
+          66% { transform: translate(5vw, 30vh) scale(0.95); }
+        }
+        @keyframes orbita-b {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          40% { transform: translate(-15vw, -16vh) scale(1.2); }
+          70% { transform: translate(-4vw, -32vh) scale(0.9); }
+        }
+        @keyframes orbita-c {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(11vw, -18vh) scale(1.25); }
+        }
+        .chispa {
+          position: absolute;
+          bottom: -12px;
+          border-radius: 9999px;
+          background: #f97316;
+          box-shadow: 0 0 8px 2px rgba(249, 115, 22, 0.45);
+          animation-name: subir;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          will-change: transform, opacity;
+        }
+        @keyframes subir {
+          0%   { transform: translateY(0) translateX(0); opacity: 0; }
+          8%   { opacity: 0.55; }
+          50%  { transform: translateY(-52vh) translateX(-14px); opacity: 0.4; }
+          85%  { opacity: 0.3; }
+          100% { transform: translateY(-108vh) translateX(16px); opacity: 0; }
+        }
       `}</style>
+
+      {/* FONDO DINÁMICO (orbes + chispas de candela) */}
+      <FondoDinamico />
 
       {/* BOTÓN DEL CARRITO FLOTANTE Y FIJO */}
       <div className="fixed top-4 right-4 md:top-6 md:right-8 z-40">
@@ -198,12 +311,12 @@ function App() {
       </div>
 
       {/* 1. HERO A PANTALLA COMPLETA */}
-      <section className="relative w-full h-[100svh] bg-gradient-to-b from-black via-black to-[#1a1a1a] flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[100svh] bg-gradient-to-b from-black/80 via-black/60 to-transparent flex flex-col items-center justify-center overflow-hidden">
         {/* Adornos: siluetas de perfumes flotando */}
-        <Adorno src="/img/lattafa-khamrah.png" className="w-40 md:w-64 -left-6 top-[12%]" />
-        <Adorno src="/img/armaf-club-de-nuit-intense-man.png" className="w-36 md:w-56 -right-4 top-[18%] [--rot:8deg]" />
-        <Adorno src="/img/yara.png" className="w-32 md:w-52 left-[8%] bottom-[10%] [--rot:-6deg]" />
-        <Adorno src="/img/jean-paul-gaultier-le-male.png" className="w-32 md:w-48 right-[10%] bottom-[14%] [--rot:5deg]" />
+        <Adorno src="/img/lattafa-khamrah.webp" className="w-40 md:w-64 -left-6 top-[12%]" />
+        <Adorno src="/img/armaf-club-de-nuit-intense-man.webp" className="w-36 md:w-56 -right-4 top-[18%] [--rot:8deg]" />
+        <Adorno src="/img/yara.webp" className="w-32 md:w-52 left-[8%] bottom-[10%] [--rot:-6deg]" />
+        <Adorno src="/img/jean-paul-gaultier-le-male.webp" className="w-32 md:w-48 right-[10%] bottom-[14%] [--rot:5deg]" />
 
         {/* Resplandor suave */}
         <div className="absolute w-[480px] h-[480px] rounded-full bg-[#f97316]/10 blur-[140px]"></div>
@@ -279,10 +392,14 @@ function App() {
       {/* 3. CONTENIDO DEL CATÁLOGO */}
       <div className="flex-1 px-4 md:px-8 mt-14 relative">
 
-        {/* Adornos entre secciones */}
-        <Adorno src="/img/versace-eros.png" className="w-44 md:w-72 -left-10 top-[20%] [--rot:-8deg] hidden md:block" />
-        <Adorno src="/img/afnan-9pm.png" className="w-44 md:w-72 -right-12 top-[55%] [--rot:7deg] hidden md:block" />
-        <Adorno src="/img/carolina-herrera-212-vip-black.png" className="w-40 md:w-64 -left-8 top-[80%] [--rot:5deg] hidden md:block" />
+        {/* Adornos entre secciones (con parallax al hacer scroll) */}
+        <Adorno src="/img/versace-eros.webp" speed={-0.06} className="w-32 md:w-72 -left-10 top-[12%] [--rot:-8deg]" />
+        <Adorno src="/img/lattafa-khamrah-qahwa.webp" speed={0.05} className="w-28 md:w-56 -right-8 top-[26%] [--rot:9deg] hidden md:block" />
+        <Adorno src="/img/nike-ultra-purple.webp" speed={-0.04} className="w-28 md:w-52 left-[4%] top-[41%] [--rot:-5deg] hidden md:block" />
+        <Adorno src="/img/afnan-9pm.webp" speed={0.07} className="w-32 md:w-72 -right-12 top-[55%] [--rot:7deg]" />
+        <Adorno src="/img/fragluxe-savage.webp" speed={-0.05} className="w-28 md:w-56 -left-6 top-[68%] [--rot:6deg] hidden md:block" />
+        <Adorno src="/img/carolina-herrera-212-vip-black.webp" speed={0.05} className="w-28 md:w-64 -left-8 top-[84%] [--rot:5deg]" />
+        <Adorno src="/img/versace-eros-parfum.webp" speed={-0.06} className="w-28 md:w-56 -right-10 top-[92%] [--rot:-7deg] hidden md:block" />
 
         {perfumesFiltrados.length === 0 ? (
           <p className="text-center text-gray-500 text-lg mt-12 mb-24">No se encontraron perfumes.</p>
