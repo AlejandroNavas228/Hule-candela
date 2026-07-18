@@ -2,7 +2,7 @@ export const perfumes = [
   { 
     id: 1, 
     marca: "LATTAFA", 
-    nombre: "KHANRAH DUKHAN", 
+    nombre: "KHAMRAH DUKHAN", 
     precioDetal: "", precioMayor: "", descripcion: "", 
     imagen: "/img/khanrah-dukhan.webp" 
   },
@@ -23,7 +23,7 @@ export const perfumes = [
   { 
     id: 4, 
     marca: "LATTAFA", 
-    nombre: "KHANRAH CLASIC", 
+    nombre: "KHAMRAH CLASIC", 
     precioDetal: "", precioMayor: "", descripcion: "", 
     imagen: "/img/khanrah-clasic.webp" 
   },
