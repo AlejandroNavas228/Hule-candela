@@ -344,14 +344,14 @@ function App() {
           <p className="text-gray-400 text-xs md:text-sm tracking-[0.35em] uppercase mt-0 md:mt-6 opacity-0 animate-fade-in" style={{ animationDelay: '1.6s', animationDuration: '1s', animationFillMode: 'forwards' }}>
             Catálogo de perfumes
           </p>
-        </div>
 
-        {/* Indicador de scroll */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 animate-fade-in" style={{ animationDelay: '1.8s', animationDuration: '1s', animationFillMode: 'forwards' }}>
-          <span className="text-gray-500 text-[10px] tracking-[0.3em] uppercase">Desliza</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-[#f97316] animate-bounce">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
+          {/* Indicador de scroll: pegado justo debajo del texto */}
+          <div className="flex flex-col items-center gap-2 mt-8 md:mt-10 opacity-0 animate-fade-in" style={{ animationDelay: '1.8s', animationDuration: '1s', animationFillMode: 'forwards' }}>
+            <span className="text-gray-500 text-[10px] tracking-[0.3em] uppercase">Desliza</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-[#f97316] animate-bounce">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
         </div>
       </section>
 
