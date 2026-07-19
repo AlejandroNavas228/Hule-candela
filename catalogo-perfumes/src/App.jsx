@@ -331,6 +331,19 @@ function App() {
           <p className="text-gray-400 text-xs md:text-sm tracking-[0.35em] uppercase mt-8 opacity-0 animate-fade-in" style={{ animationDelay: '1.2s', animationDuration: '1s', animationFillMode: 'forwards' }}>
             Catálogo de perfumes
           </p>
+
+          <p
+            className="font-light italic text-white/80 text-sm md:text-base leading-relaxed tracking-wide text-center mt-6 max-w-xs md:max-w-sm opacity-0 animate-fade-in"
+            style={{ animationDelay: '1.6s', animationDuration: '1.2s', animationFillMode: 'forwards', fontFamily: "'Cormorant Garamond', 'Playfair Display', serif" }}
+          >
+            Con un buen perfume<br />
+            se alegra el corazón;<br />
+            con la dulzura de la amistad<br />
+            se vuelve a la vida.
+            <span className="block mt-2 text-[11px] md:text-xs tracking-[0.3em] uppercase text-white/50 not-italic">
+              Proverbios 27:9
+            </span>
+          </p>
         </div>
 
         {/* Indicador de scroll */}
