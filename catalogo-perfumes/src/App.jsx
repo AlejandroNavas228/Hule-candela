@@ -329,19 +329,19 @@ function App() {
             className="w-full max-w-[280px] md:max-w-[420px] h-auto object-contain drop-shadow-2xl animate-logo-focus"
           />
           <p
-            className="font-light italic text-white/80 text-xs md:text-sm leading-snug tracking-wide text-center mt-6 max-w-[15rem] md:max-w-xs opacity-0 animate-fade-in"
+            className="font-light italic text-white/80 text-xs md:text-sm leading-snug tracking-wide text-center mt-0 -translate-y-2 max-w-[15rem] md:max-w-xs opacity-0 animate-fade-in"
             style={{ animationDelay: '1.2s', animationDuration: '1.2s', animationFillMode: 'forwards', fontFamily: "'Cormorant Garamond', 'Playfair Display', serif" }}
           >
             Con un buen perfume<br />
             se alegra el corazón;<br />
             con la dulzura de la amistad<br />
             se vuelve a la vida.
-            <span className="block mt-1.5 text-[10px] tracking-[0.3em] uppercase text-white/50 not-italic">
+            <span className="block mt-1 text-[10px] tracking-[0.3em] uppercase text-white/50 not-italic">
               Proverbios 27:9
             </span>
           </p>
 
-          <p className="text-gray-400 text-xs md:text-sm tracking-[0.35em] uppercase mt-6 opacity-0 animate-fade-in" style={{ animationDelay: '1.6s', animationDuration: '1s', animationFillMode: 'forwards' }}>
+          <p className="text-gray-400 text-xs md:text-sm tracking-[0.35em] uppercase mt-0 opacity-0 animate-fade-in" style={{ animationDelay: '1.6s', animationDuration: '1s', animationFillMode: 'forwards' }}>
             Catálogo de perfumes
           </p>
         </div>
