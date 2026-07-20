@@ -68,7 +68,7 @@ export const perfumes = [
   { id: 12, marca: "LATTAFA", nombre: "ASAD BOURBON", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-asad-bourbon.webp" },
   { id: 13, marca: "LATTAFA", nombre: "THE KINGDOM", precioDetal: "40.99", precioMayor: "26.99", descripcion: "", imagen: "/img/lattafa-the-kingdom.webp" },
   { id: 14, marca: "LATTAFA", nombre: "ANGHAM", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-angham.webp" },
-  { id: 15, marca: "LATTAFA", nombre: "BADE'E AL OUD - OUD FOR GLORY", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-badee-al-oud-oud-for-glory.webp" },
+  { id: 15, marca: "LATTAFA", nombre: "BADE'E AL OUD - OUD FOR GLORY", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-badee-al-oud-for-glory.webp" },
   { id: 16, marca: "LATTAFA", nombre: "KHAMRAH QAHWA", precioDetal: "50.99", precioMayor: "33.99", descripcion: "", imagen: "/img/lattafa-khamrah-qahwa.webp" },
   { id: 18, marca: "LATTAFA", nombre: "FAKHAR", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/lattafa-fakhar.webp" },
   { id: 19, marca: "LATTAFA", nombre: "PETRA", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/lattafa-petra.webp" },
@@ -112,8 +112,8 @@ export const perfumes = [
   { id: 54, marca: "ARMAF", nombre: "VENTANA POUR HOMME", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/armaf-ventana-pour-homme.webp" },
 
   // ===== AFNAN =====
-  { id: 55, marca: "AFNAN", nombre: "9 PM NIGHT OUT", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/afnan-9pm-night-out.webp" },
-  { id: 56, marca: "AFNAN", nombre: "9AM (I AM 9)", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/afnan-9am.webp" },
+  { id: 55, marca: "AFNAN", nombre: "9 PM NIGHT OUT", precioDetal: "71.99", precioMayor: "47.99", descripcion: "", imagen: "/img/afnan-9pm-night-out.webp" },
+  { id: 56, marca: "AFNAN", nombre: "9AM (I AM 9)", precioDetal: "46.99", precioMayor: "31.99", descripcion: "", imagen: "/img/afnan-9am.webp" },
   { id: 57, marca: "AFNAN", nombre: "9PM REBEL", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/afnan-9pm-rebel.webp" },
   { id: 58, marca: "AFNAN", nombre: "9AM POUR FEMME", precioDetal: "51.99", precioMayor: "34.99", descripcion: "", imagen: "/img/afnan-9am-pour-femme.webp" },
   { id: 59, marca: "AFNAN", nombre: "9PM ELIXIR", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/afnan-9pm-elixir.webp" },
