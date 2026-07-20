@@ -6,6 +6,89 @@ const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,
 const parsePrecio = (v) => (v ? parseFloat(String(v).replace(',', '.')) : 0);
 const mostrarPrecio = (v) => (v ? `$${parsePrecio(v).toFixed(2)}` : 'Consultar');
 
+// ---- Textos legales ----
+const TEXTOS_LEGALES = {
+  terminos: {
+    titulo: 'T\u00e9rminos y Condiciones',
+    contenido: (
+      <>
+        <p>Huele Candela es un cat\u00e1logo digital operado por una persona natural, sin que ello implique la constituci\u00f3n de una sociedad mercantil. Al navegar y hacer uso de este sitio, aceptas los t\u00e9rminos aqu\u00ed descritos.</p>
+        <h5>1. Naturaleza del sitio</h5>
+        <p>Este sitio web funciona como cat\u00e1logo virtual de perfumes. No se procesan pagos ni compras directamente en la p\u00e1gina: cada pedido se coordina de forma manual a trav\u00e9s de WhatsApp, donde se confirman disponibilidad, precio final, forma de pago y m\u00e9todo de entrega antes de formalizar la venta.</p>
+        <h5>2. Precios y disponibilidad</h5>
+        <p>Los precios mostrados (al detal y al mayor) est\u00e1n expresados en d\u00f3lares estadounidenses (USD) y pueden cambiar sin previo aviso debido a fluctuaciones del mercado o de proveedores. Los productos marcados como "Consultar" no tienen un precio publicado y deben cotizarse directamente por WhatsApp. La disponibilidad de cada perfume se confirma al momento del pedido, ya que el inventario puede variar.</p>
+        <h5>3. Proceso de compra</h5>
+        <p>Al a\u00f1adir productos al carrito y pulsar "Enviar a WhatsApp", se genera un mensaje con el resumen de tu pedido que se env\u00eda a trav\u00e9s de tu propia aplicaci\u00f3n de WhatsApp. La venta se considera formalizada \u00fanicamente cuando ambas partes acuerdan los detalles finales (precio, pago y entrega) por ese medio.</p>
+        <h5>4. Env\u00edos y entregas</h5>
+        <p>Las condiciones de env\u00edo (zona, costo y tiempo estimado) se coordinan caso por caso v\u00eda WhatsApp. Huele Candela no se hace responsable por retrasos ocasionados por empresas de mensajer\u00eda o transporte externas una vez el pedido ha sido despachado.</p>
+        <h5>5. Cambios y devoluciones</h5>
+        <p>Por tratarse de productos de perfumer\u00eda, no se aceptan devoluciones una vez el producto ha sido abierto o usado, salvo defecto de f\u00e1brica comprobado. Cualquier inconformidad debe reportarse dentro de las 24 horas siguientes a la entrega, a trav\u00e9s de WhatsApp, adjuntando evidencia (fotos o video).</p>
+        <h5>6. Marcas registradas</h5>
+        <p>Los nombres de marcas, casas de perfumer\u00eda y dise\u00f1adores que aparecen en este cat\u00e1logo (como referencia de l\u00ednea, familia olfativa o inspiraci\u00f3n) son propiedad de sus respectivos due\u00f1os. Su menci\u00f3n tiene fines meramente descriptivos e identificativos, y no implica afiliaci\u00f3n, patrocinio ni asociaci\u00f3n comercial entre esas marcas y Huele Candela.</p>
+        <h5>7. Legislaci\u00f3n aplicable</h5>
+        <p>Estos t\u00e9rminos se rigen por las leyes de la Rep\u00fablica Bolivariana de Venezuela. Cualquier controversia se intentar\u00e1 resolver primero de forma amistosa a trav\u00e9s de los canales de contacto del negocio.</p>
+        <p className="text-gray-500 text-xs mt-6">\u00daltima actualizaci\u00f3n: {new Date().toLocaleDateString('es-VE', { year: 'numeric', month: 'long', day: 'numeric' })}.</p>
+      </>
+    ),
+  },
+  privacidad: {
+    titulo: 'Pol\u00edtica de Privacidad',
+    contenido: (
+      <>
+        <p>En Huele Candela respetamos tu privacidad. Esta p\u00e1gina explica qu\u00e9 informaci\u00f3n se maneja cuando usas este cat\u00e1logo y c\u00f3mo se trata.</p>
+        <h5>1. Responsable del tratamiento</h5>
+        <p>Este sitio es operado por una persona natural bajo el nombre comercial "Huele Candela". Para cualquier consulta sobre tus datos puedes escribir por WhatsApp o Instagram, canales listados al pie de esta p\u00e1gina.</p>
+        <h5>2. Qu\u00e9 datos se recopilan</h5>
+        <p>Este cat\u00e1logo no tiene servidores propios de base de datos ni formularios que almacenen informaci\u00f3n en l\u00ednea. Los \u00fanicos datos que se solicitan son los que t\u00fa mismo escribes voluntariamente en el formulario de "Datos de env\u00edo" (nombre, direcci\u00f3n y notas opcionales) al finalizar un pedido. Esa informaci\u00f3n se usa exclusivamente para armar el mensaje que se env\u00eda a trav\u00e9s de tu propia app de WhatsApp \u2014 nunca se guarda en ning\u00fan servidor ni base de datos de Huele Candela.</p>
+        <h5>3. Uso de la informaci\u00f3n</h5>
+        <p>Los datos de env\u00edo que compartes se usan \u00fanicamente para coordinar tu pedido (confirmar direcci\u00f3n, forma de entrega y contacto). No se venden, alquilan ni comparten con terceros con fines publicitarios.</p>
+        <h5>4. Servicios de terceros</h5>
+        <p>Este sitio utiliza los siguientes servicios externos, cada uno con su propia pol\u00edtica de privacidad:</p>
+        <ul>
+          <li><strong>WhatsApp / Meta:</strong> para recibir y coordinar pedidos y consultas.</li>
+          <li><strong>Vercel:</strong> plataforma de hosting donde est\u00e1 alojado el sitio.</li>
+          <li><strong>Google Fonts:</strong> para cargar las tipograf\u00edas del sitio, lo que puede implicar que tu navegador se conecte a servidores de Google.</li>
+        </ul>
+        <h5>5. Tus derechos</h5>
+        <p>Puedes solicitar en cualquier momento que se aclare qu\u00e9 informaci\u00f3n recibimos de ti o pedir que no se use m\u00e1s, escribiendo directamente por WhatsApp o Instagram.</p>
+        <p className="text-gray-500 text-xs mt-6">\u00daltima actualizaci\u00f3n: {new Date().toLocaleDateString('es-VE', { year: 'numeric', month: 'long', day: 'numeric' })}.</p>
+      </>
+    ),
+  },
+  cookies: {
+    titulo: 'Pol\u00edtica de Cookies',
+    contenido: (
+      <>
+        <p>Este sitio no utiliza cookies de rastreo, publicidad ni anal\u00edtica de terceros. No implementamos Google Analytics, p\u00edxeles de Facebook/Meta ni ning\u00fan sistema de seguimiento de comportamiento.</p>
+        <h5>1. Almacenamiento local</h5>
+        <p>El cat\u00e1logo funciona completamente en tu navegador: el carrito de compras se guarda temporalmente en la memoria de la p\u00e1gina mientras la tienes abierta, y se borra al cerrarla o recargarla. No se guarda informaci\u00f3n en cookies persistentes de nuestro lado.</p>
+        <h5>2. Servicios externos</h5>
+        <p>Al cargar las tipograf\u00edas del sitio, tu navegador se conecta a servidores de Google Fonts, lo que t\u00e9cnicamente implica compartir tu direcci\u00f3n IP con Google, seg\u00fan su propia pol\u00edtica. No usamos ning\u00fan dato adicional de esa conexi\u00f3n.</p>
+        <h5>3. Control desde tu navegador</h5>
+        <p>Aunque este sitio no depende de cookies para funcionar, siempre puedes revisar y borrar cualquier dato almacenado por tu navegador desde su configuraci\u00f3n de privacidad.</p>
+        <p className="text-gray-500 text-xs mt-6">\u00daltima actualizaci\u00f3n: {new Date().toLocaleDateString('es-VE', { year: 'numeric', month: 'long', day: 'numeric' })}.</p>
+      </>
+    ),
+  },
+  descargo: {
+    titulo: 'Descargo de Responsabilidad',
+    contenido: (
+      <>
+        <p>La informaci\u00f3n y las im\u00e1genes presentadas en este cat\u00e1logo se ofrecen con fines informativos y comerciales, y se procura que sean lo m\u00e1s precisas posible.</p>
+        <h5>1. Im\u00e1genes de referencia</h5>
+        <p>Las fotograf\u00edas de los productos pueden provenir del fabricante o distribuidor y son usadas como referencia visual. El empaque, la presentaci\u00f3n o el dise\u00f1o de la botella real pueden variar ligeramente respecto a la imagen mostrada (por ediciones, lotes o actualizaciones del fabricante), sin que eso afecte la autenticidad del producto.</p>
+        <h5>2. Perfumes originales e inspirados</h5>
+        <p>El cat\u00e1logo incluye tanto perfumes originales de casas reconocidas (Lattafa, Armaf, Afnan, entre otras) como fragancias de otras marcas de perfumer\u00eda inspiradas en familias olfativas populares. Cuando corresponda, cualquier menci\u00f3n comparativa con marcas de dise\u00f1ador es \u00fanicamente referencial y no implica que el producto sea fabricado, distribuido o respaldado por esa casa de moda.</p>
+        <h5>3. Sin responsabilidad por uso indebido</h5>
+        <p>Huele Candela no se hace responsable por reacciones al\u00e9rgicas o efectos adversos derivados del uso de los productos. Se recomienda realizar una prueba de contacto antes del uso habitual si tienes piel sensible.</p>
+        <h5>4. Disponibilidad de la informaci\u00f3n</h5>
+        <p>Este sitio puede contener errores tipogr\u00e1ficos o de precio de forma involuntaria. Nos reservamos el derecho de corregir dicha informaci\u00f3n en cualquier momento sin previo aviso.</p>
+        <p className="text-gray-500 text-xs mt-6">\u00daltima actualizaci\u00f3n: {new Date().toLocaleDateString('es-VE', { year: 'numeric', month: 'long', day: 'numeric' })}.</p>
+      </>
+    ),
+  },
+};
+
 // ---- Componente de aparición al hacer scroll ----
 function Reveal({ children, className = '', delay = 0 }) {
   const ref = useRef(null);
@@ -57,11 +140,13 @@ function Adorno({ src, className = '', speed = 0 }) {
     };
   }, [speed]);
   return (
-    <span ref={ref} aria-hidden="true" className={`absolute pointer-events-none select-none ${className}`}>
+    <span ref={ref} aria-hidden="true" className={`absolute pointer-events-none select-none hidden md:block ${className}`}>
       <img
         src={src}
         alt=""
-        className="w-full mix-blend-screen opacity-[0.16] blur-[1px] animate-flotar"
+        loading="lazy"
+        decoding="async"
+        className="w-full opacity-[0.13] animate-flotar"
         style={{ filter: 'invert(1) grayscale(1)' }}
       />
     </span>
@@ -70,16 +155,16 @@ function Adorno({ src, className = '', speed = 0 }) {
 
 // ---- Fondo dinámico: orbes de luz + chispas de candela ----
 function FondoDinamico() {
-  const chispas = useMemo(
-    () =>
-      Array.from({ length: 16 }, (_, i) => ({
-        left: (i * 61 + 9) % 100,
-        delay: (i * 1.9) % 14,
-        dur: 10 + ((i * 2.7) % 11),
-        size: 2 + ((i * 5) % 4),
-      })),
-    []
-  );
+  const chispas = useMemo(() => {
+    const esMovil = typeof window !== 'undefined' && window.innerWidth < 768;
+    const total = esMovil ? 6 : 16;
+    return Array.from({ length: total }, (_, i) => ({
+      left: (i * 61 + 9) % 100,
+      delay: (i * 1.9) % 14,
+      dur: 10 + ((i * 2.7) % 11),
+      size: 2 + ((i * 5) % 4),
+    }));
+  }, []);
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
       <div className="orbe orbe-a"></div>
@@ -113,6 +198,7 @@ function App() {
   const [modoPrecio, setModoPrecio] = useState('detal'); // 'detal' | 'mayor'
   const [detalle, setDetalle] = useState(null);
   const [notificacion, setNotificacion] = useState(null);
+  const [paginaLegal, setPaginaLegal] = useState(null); // 'terminos' | 'privacidad' | 'cookies' | 'descargo' | null
 
   // Número de WhatsApp
   const numeroWhatsApp = "584120994977";
@@ -182,8 +268,8 @@ function App() {
   const TarjetaPerfume = ({ perfume }) => (
     <div className="flex flex-col group cursor-pointer" onClick={() => setDetalle(perfume)}>
       <div className="relative bg-gradient-to-b from-[#2a2a2a] to-[#1f1f1f] border border-gray-800 rounded-3xl p-5 md:p-7 aspect-square flex items-center justify-center mb-4 shadow-lg transition-all duration-300 group-hover:-translate-y-2 group-hover:border-[#f97316]/40 group-hover:shadow-[#f97316]/10 overflow-hidden">
-        <div className="absolute w-2/3 h-2/3 rounded-full bg-white/[0.04] blur-2xl"></div>
-        <img src={perfume.imagen} alt={perfume.nombre} loading="lazy" className="relative object-contain h-full w-full drop-shadow-[0_12px_16px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%)' }}></div>
+        <img src={perfume.imagen} alt={perfume.nombre} loading="lazy" decoding="async" className="relative object-contain h-full w-full drop-shadow-[0_12px_16px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
       </div>
       <div className="flex justify-between items-start gap-2 px-1">
         <div className="flex-1">
@@ -291,6 +377,32 @@ function App() {
           85%  { opacity: 0.3; }
           100% { transform: translateY(-108vh) translateX(16px); opacity: 0; }
         }
+
+        /* En móvil: aligeramos el fondo animado para que el scroll vaya fluido */
+        @media (max-width: 767px) {
+          .orbe { filter: blur(45px); }
+          .orbe-a, .orbe-b, .orbe-c { animation: none; }
+          .orbe-a { width: 320px; height: 320px; }
+          .orbe-b { width: 280px; height: 280px; }
+          .orbe-c { width: 240px; height: 240px; }
+          .animate-flotar { animation: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .orbe-a, .orbe-b, .orbe-c, .animate-flotar, .chispa { animation: none !important; }
+        }
+        .legal-texto h5 {
+          color: #e5e5e5;
+          font-size: 0.85rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          margin-top: 1.25rem;
+          font-weight: 600;
+        }
+        .legal-texto ul {
+          list-style: disc;
+          padding-left: 1.25rem;
+        }
+        .legal-texto li { margin-bottom: 0.35rem; }
       `}</style>
 
       {/* FONDO DINÁMICO (orbes + chispas de candela) */}
@@ -298,7 +410,7 @@ function App() {
 
       {/* BOTÓN DEL CARRITO FLOTANTE Y FIJO */}
       <div className="fixed top-4 right-4 md:top-6 md:right-8 z-40">
-        <button onClick={() => setIsCartOpen(true)} className="relative p-3 text-[#e5e5e5] hover:text-[#f97316] bg-[#1a1a1a]/80 backdrop-blur-md rounded-full transition-all duration-300 shadow-xl shadow-black/50 border border-gray-700 hover:scale-105">
+        <button onClick={() => setIsCartOpen(true)} className="relative p-3 text-[#e5e5e5] hover:text-[#f97316] bg-[#1a1a1a] md:bg-[#1a1a1a]/80 md:backdrop-blur-md rounded-full transition-all duration-300 shadow-xl shadow-black/50 border border-gray-700 hover:scale-105">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
           </svg>
@@ -356,7 +468,7 @@ function App() {
       </section>
 
       {/* 2. BARRA DE BÚSQUEDA Y FILTROS (fija al hacer scroll) */}
-      <div className="sticky top-0 z-30 bg-[#1a1a1a]/90 backdrop-blur-md border-b border-gray-800/60 py-4 px-4">
+      <div className="sticky top-0 z-30 bg-[#1a1a1a] md:bg-[#1a1a1a]/90 md:backdrop-blur-md border-b border-gray-800/60 py-4 px-4">
         <div className="max-w-6xl mx-auto space-y-4">
           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4">
             {/* Búsqueda */}
@@ -467,8 +579,39 @@ function App() {
             <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.16-3.44-3.35-3.46-5.7-.02-2.14.93-4.18 2.59-5.46 1.49-1.14 3.42-1.57 5.23-1.19.16.03.32.08.47.14v4.11c-.42-.14-.87-.2-1.31-.17-1.14.04-2.22.61-2.92 1.52-.78 1.05-.98 2.47-.53 3.69.44 1.16 1.51 2 2.75 2.22 1.25.21 2.55-.13 3.43-1.03.95-.94 1.41-2.3 1.39-3.64V0h4.21z" /></svg>
           </a>
         </div>
+        <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 px-6">
+          <button onClick={() => setPaginaLegal('terminos')} className="text-gray-500 hover:text-[#f97316] text-xs tracking-wide transition-colors duration-300">Términos y Condiciones</button>
+          <button onClick={() => setPaginaLegal('privacidad')} className="text-gray-500 hover:text-[#f97316] text-xs tracking-wide transition-colors duration-300">Política de Privacidad</button>
+          <button onClick={() => setPaginaLegal('cookies')} className="text-gray-500 hover:text-[#f97316] text-xs tracking-wide transition-colors duration-300">Política de Cookies</button>
+          <button onClick={() => setPaginaLegal('descargo')} className="text-gray-500 hover:text-[#f97316] text-xs tracking-wide transition-colors duration-300">Descargo de Responsabilidad</button>
+        </div>
         <p className="text-gray-600 text-xs">© {new Date().getFullYear()} Huele Candela. Todos los derechos reservados.</p>
       </footer>
+
+      {/* MODAL PÁGINAS LEGALES */}
+      {paginaLegal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setPaginaLegal(null)}>
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto"
+          >
+            <div className="flex items-start justify-between mb-6">
+              <h3 className="text-xl md:text-2xl text-[#e5e5e5] tracking-wide uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>
+                {TEXTOS_LEGALES[paginaLegal].titulo}
+              </h3>
+              <button onClick={() => setPaginaLegal(null)} className="text-gray-400 hover:text-[#f97316] transition-colors duration-300 ml-4 shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="legal-texto text-gray-400 text-sm leading-relaxed space-y-4">
+              {TEXTOS_LEGALES[paginaLegal].contenido}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* BOTÓN FLOTANTE WHATSAPP */}
       <a
