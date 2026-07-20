@@ -75,7 +75,7 @@ export const perfumes = [
   { id: 20, marca: "LATTAFA", nombre: "ASAD ZANZIBAR", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-asad-zanzibar.webp" },
   { id: 21, marca: "LATTAFA", nombre: "ECLAIRE PISTACHIO", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/lattafa-eclaire-pistachio.webp" },
   { id: 22, marca: "LATTAFA", nombre: "YARA MOI", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-yara-moi.webp" },
-  { id: 23, marca: "LATTAFA", nombre: "HAYAATI", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-hayaati.webp" },
+  { id: 23, marca: "LATTAFA", nombre: "HAYAATI", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-hayaati.webp" },
   { id: 24, marca: "LATTAFA", nombre: "MAYAR", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-mayar.webp" },
   { id: 25, marca: "LATTAFA", nombre: "ASAD", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-asad.webp" },
   { id: 26, marca: "LATTAFA", nombre: "PRIDE - PISA", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-pride-pisa.webp" },
