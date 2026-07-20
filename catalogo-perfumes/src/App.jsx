@@ -450,7 +450,7 @@ function App() {
             se vuelve a la vida.
           </p>
 
-          <p className="text-gray-400 text-xs md:text-sm tracking-[0.35em] uppercase mt-0 md:mt-6 opacity-0 animate-fade-in" style={{ animationDelay: '1.6s', animationDuration: '1s', animationFillMode: 'forwards' }}>
+          <p className="text-gray-400 text-xs md:text-sm tracking-[0.35em] uppercase mt-4 md:mt-6 opacity-0 animate-fade-in" style={{ animationDelay: '1.6s', animationDuration: '1s', animationFillMode: 'forwards' }}>
             Catálogo de perfumes
           </p>
 
