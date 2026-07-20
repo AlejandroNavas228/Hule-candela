@@ -71,7 +71,6 @@ export const perfumes = [
   { id: 14, marca: "LATTAFA", nombre: "ANGHAM", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-angham.webp" },
   { id: 15, marca: "LATTAFA", nombre: "BADE'E AL OUD - OUD FOR GLORY", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-badee-al-oud-oud-for-glory.webp" },
   { id: 16, marca: "LATTAFA", nombre: "KHAMRAH QAHWA", precioDetal: "34.99", precioMayor: "30.99", descripcion: "", imagen: "/img/lattafa-khamrah-qahwa.webp" },
-  { id: 17, marca: "LATTAFA", nombre: "KHAMRAH", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-khamrah.webp" },
   { id: 18, marca: "LATTAFA", nombre: "FAKHAR", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/lattafa-fakhar.webp" },
   { id: 19, marca: "LATTAFA", nombre: "PETRA", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/lattafa-petra.webp" },
   { id: 20, marca: "LATTAFA", nombre: "ASAD ZANZIBAR", precioDetal: "24.99", precioMayor: "21.99", descripcion: "", imagen: "/img/lattafa-asad-zanzibar.webp" },
