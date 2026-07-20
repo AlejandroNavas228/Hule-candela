@@ -121,18 +121,18 @@ export const perfumes = [
   { id: 60, marca: "AFNAN", nombre: "9PM", precioDetal: "43.99", precioMayor: "28.99", descripcion: "", imagen: "/img/afnan-9pm.webp" },
 
   // ===== NIKE =====
-  { id: 61, marca: "NIKE", nombre: "TRENDY PINK WOMAN", precioDetal: "20.99", precioMayor: "13.99", descripcion: "", imagen: "/img/nike-trendy-pink.webp" },
+  { id: 61, marca: "NIKE", nombre: "TRENDY PINK WOMAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/nike-trendy-pink.webp" },
   { id: 62, marca: "NIKE", nombre: "ULTRA PURPLE WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-ultra-purple.webp" },
   { id: 63, marca: "NIKE", nombre: "PURPLE MOOD WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-purple-mood.webp" },
-  { id: 64, marca: "NIKE", nombre: "ULTRA PINK WOMAN", precioDetal: "20.99", precioMayor: "13.99", descripcion: "", imagen: "/img/nike-ultra-pink.webp" },
+  { id: 64, marca: "NIKE", nombre: "ULTRA PINK WOMAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/nike-ultra-pink.webp" },
   { id: 65, marca: "NIKE", nombre: "SWEET BLOSSOM WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-sweet-blossom.webp" },
   { id: 66, marca: "NIKE", nombre: "YUMMY MUSK WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-yummy-musk.webp" },
   { id: 67, marca: "NIKE", nombre: "CORAL CRUSH WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-coral-crush-woman.webp" },
   { id: 68, marca: "NIKE", nombre: "MAN INDIGO", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-man-indigo.webp" },
 
   // ===== VERSACE =====
-  { id: 69, marca: "VERSACE", nombre: "EROS FLAME", precioDetal: "113.99", precioMayor: "75.99", descripcion: "", imagen: "/img/versace-eros-flame.webp" },
-  { id: 70, marca: "VERSACE", nombre: "EROS", precioDetal: "110.99", precioMayor: "73.99", descripcion: "", imagen: "/img/versace-eros.webp" },
+  { id: 69, marca: "VERSACE", nombre: "EROS FLAME", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/versace-eros-flame.webp" },
+  { id: 70, marca: "VERSACE", nombre: "EROS", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/versace-eros.webp" },
   { id: 71, marca: "VERSACE", nombre: "POUR HOMME DYLAN BLUE", precioDetal: "88.99", precioMayor: "58.99", descripcion: "", imagen: "/img/versace-pour-homme-dylan-blue.webp" },
   { id: 72, marca: "VERSACE", nombre: "EROS PARFUM", precioDetal: "130.99", precioMayor: "86.99", descripcion: "", imagen: "/img/versace-eros-parfum.webp" },
 
@@ -462,7 +462,7 @@ export const perfumes = [
   { id: 209, marca: "ARMAF", nombre: "ODYSSEY AOUD", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-aoud.webp" },
 
   // ===== PERRY ELLIS (NUEVOS) =====
-  { id: 210, marca: "PERRY ELLIS", nombre: "360 FOR MEN", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/perry-ellis-360-for-men.webp" },
+  { id: 210, marca: "PERRY ELLIS", nombre: "360 FOR MEN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/perry-ellis-360-for-men.webp" },
 
   // ===== RALPH LAUREN (NUEVOS) =====
   { id: 211, marca: "RALPH LAUREN", nombre: "POLO BLUE", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/ralph-lauren-polo-blue.webp" },
