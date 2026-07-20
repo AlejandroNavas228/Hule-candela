@@ -329,7 +329,7 @@ function App() {
             className="w-full max-w-[280px] md:max-w-[420px] h-auto object-contain drop-shadow-2xl animate-logo-focus"
           />
           <p
-            className="font-light italic text-white/80 text-xs md:text-base leading-snug tracking-wide text-center -mt-12 md:-mt-16 max-w-[15rem] md:max-w-sm opacity-0 animate-fade-in"
+            className="font-light italic text-white/80 text-xs md:text-base leading-snug tracking-wide text-center -mt-12 md:-mt-20 max-w-[15rem] md:max-w-sm opacity-0 animate-fade-in"
             style={{ animationDelay: '1.2s', animationDuration: '1.2s', animationFillMode: 'forwards', fontFamily: "'Cormorant Garamond', 'Playfair Display', serif" }}
           >
             Con un buen perfume<br />
