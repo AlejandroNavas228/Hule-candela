@@ -626,7 +626,7 @@ function App() {
 
       {/* Notificación (Toast) */}
       {notificacion && (
-        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-[#f97316] text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold tracking-wider flex items-center gap-2 animate-fade-in">
+        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-[#f97316] text-white px-6 py-3 rounded-full shadow-2xl z-[100] text-sm font-bold tracking-wider flex items-center gap-2 animate-fade-in">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
           {notificacion}
         </div>
