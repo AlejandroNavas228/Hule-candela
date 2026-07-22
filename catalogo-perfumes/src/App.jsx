@@ -274,7 +274,7 @@ function App() {
       <div className="flex justify-between items-start gap-2 px-1">
         <div className="flex-1">
           <p className="text-gray-500 text-[10px] md:text-xs tracking-[0.2em] uppercase">{perfume.marca}</p>
-          <h3 className="text-[#e5e5e5] text-xl md:text-2xl uppercase leading-none tracking-wide mt-1" style={{ fontFamily: "'Extenda', sans-serif" }}>{perfume.nombre}</h3>
+          <h3 className="text-[#e5e5e5] text-xl md:text-2xl uppercase leading-none tracking-wide mt-1" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{perfume.nombre}</h3>
           <p className="text-[#f97316] font-bold text-sm md:text-base mt-2 tracking-widest" style={{ fontFamily: "'Aileron', sans-serif" }}>{mostrarPrecio(precioActivo(perfume))}</p>
         </div>
         <button
@@ -533,7 +533,7 @@ function App() {
                 <section>
                   <div className="flex items-end justify-between mb-8 md:mb-10">
                     <div>
-                      <h2 className="text-[#e5e5e5] text-4xl md:text-6xl uppercase tracking-wider leading-none" style={{ fontFamily: "'Extenda', sans-serif" }}>{marca}</h2>
+                      <h2 className="text-[#e5e5e5] text-4xl md:text-6xl uppercase tracking-wider leading-none" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{marca}</h2>
                       <div className="h-[3px] w-16 bg-[#f97316] rounded-full mt-3"></div>
                     </div>
                     <span className="text-gray-500 text-xs md:text-sm tracking-widest uppercase pb-1">{items.length} {items.length === 1 ? 'perfume' : 'perfumes'}</span>
@@ -551,7 +551,7 @@ function App() {
           /* --- Vista filtrada: una sola cuadrícula --- */
           <div className="max-w-6xl mx-auto mb-28">
             <Reveal>
-              <h1 className="text-[#e5e5e5] text-5xl md:text-7xl text-center mb-4 tracking-wider uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>
+              <h1 className="text-[#e5e5e5] text-5xl md:text-7xl text-center mb-4 tracking-wider uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                 {marcaSeleccionada === 'TODAS' ? 'RESULTADOS' : marcaSeleccionada}
               </h1>
               <p className="text-center text-gray-500 text-xs tracking-[0.3em] uppercase mb-12">{perfumesFiltrados.length} {perfumesFiltrados.length === 1 ? 'perfume' : 'perfumes'}</p>
@@ -567,7 +567,7 @@ function App() {
 
       {/* FOOTER */}
       <footer className="mt-auto border-t border-gray-800 pt-10 pb-6 flex flex-col items-center justify-center w-full bg-[#111]">
-        <h4 className="text-[#e5e5e5] text-2xl tracking-widest mb-6 uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>HUELE CANDELA</h4>
+        <h4 className="text-[#e5e5e5] text-2xl tracking-widest mb-6 uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>HUELE CANDELA</h4>
         <div className="flex gap-6 mb-8">
           <a href="https://www.instagram.com/huelecandela?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#f97316] transition-colors duration-300">
             <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
@@ -594,7 +594,7 @@ function App() {
             className="relative bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto"
           >
             <div className="flex items-start justify-between mb-6">
-              <h3 className="text-xl md:text-2xl text-[#e5e5e5] tracking-wide uppercase" style={{ fontFamily: "'Extenda', sans-serif" }}>
+              <h3 className="text-xl md:text-2xl text-[#e5e5e5] tracking-wide uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                 {TEXTOS_LEGALES[paginaLegal].titulo}
               </h3>
               <button onClick={() => setPaginaLegal(null)} className="text-gray-400 hover:text-[#f97316] transition-colors duration-300 ml-4 shrink-0">
@@ -648,7 +648,7 @@ function App() {
               {/* Información */}
               <div className="p-7 md:p-10 flex flex-col">
                 <p className="text-[#f97316] text-xs tracking-[0.3em] uppercase font-bold">{detalle.marca}</p>
-                <h2 className="text-[#e5e5e5] text-4xl md:text-5xl uppercase leading-none tracking-wide mt-2" style={{ fontFamily: "'Extenda', sans-serif" }}>{detalle.nombre}</h2>
+                <h2 className="text-[#e5e5e5] text-4xl md:text-5xl uppercase leading-none tracking-wide mt-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{detalle.nombre}</h2>
 
                 {detalle.descripcion && (
                   <p className="text-gray-400 text-sm leading-relaxed mt-5">{detalle.descripcion}</p>
@@ -696,7 +696,7 @@ function App() {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setIsCartOpen(false)}></div>
           <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-slide-in">
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900 tracking-wide" style={{ fontFamily: "'Extenda', sans-serif" }}>TU CARRITO</h2>
+              <h2 className="text-2xl font-bold text-gray-900 tracking-wide" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>TU CARRITO</h2>
               <button onClick={() => setIsCartOpen(false)} className="text-gray-500 hover:text-[#f97316] transition-colors"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
             </div>
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
@@ -707,7 +707,7 @@ function App() {
                   <div key={item.id} className="flex gap-4 items-center">
                     <div className="w-20 h-20 bg-gray-100 rounded-xl p-2 flex-shrink-0"><img src={item.imagen} alt={item.nombre} className="w-full h-full object-contain" /></div>
                     <div className="flex-1">
-                      <h4 className="font-bold text-gray-900 text-sm md:text-base leading-tight" style={{ fontFamily: "'Extenda', sans-serif" }}>{item.nombre}</h4>
+                      <h4 className="font-bold text-gray-900 text-sm md:text-base leading-tight" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{item.nombre}</h4>
                       <p className="text-[#f97316] font-bold text-xs md:text-sm mt-1" style={{ fontFamily: "'Aileron', sans-serif" }}>{item.precioAplicado ? `$${item.precioAplicado}` : 'Consultar'}</p>
                       <p className="text-xs text-gray-500 mt-1">Cantidad: {item.cantidad}</p>
                     </div>
@@ -736,7 +736,7 @@ function App() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" onClick={() => setIsCheckoutOpen(false)}></div>
           <div className="relative w-full max-w-lg bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 shadow-2xl animate-fade-in">
-            <h2 className="text-2xl font-bold text-[#e5e5e5] mb-6 tracking-wide" style={{ fontFamily: "'Extenda', sans-serif" }}>DATOS DE ENVÍO</h2>
+            <h2 className="text-2xl font-bold text-[#e5e5e5] mb-6 tracking-wide" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>DATOS DE ENVÍO</h2>
             <form onSubmit={handleCheckout} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-1">Nombre Completo *</label>

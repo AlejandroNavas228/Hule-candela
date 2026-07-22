@@ -21,10 +21,10 @@ export const perfumes = [
     imagen: "/img/yara-tous.webp" 
   },
   { 
-    id: 4, 
-    marca: "LATTAFA", 
-    nombre: "KHAMRAH CLASIC", 
-    precioDetal: "", precioMayor: "", descripcion: "", 
+    id: 4,
+    marca: "LATTAFA",
+    nombre: "KHAMRAH CLASIC",
+    precioDetal: "48.99", precioMayor: "32.99", descripcion: "",
     imagen: "/img/khanrah-clasic.webp" 
   },
   { 
@@ -76,7 +76,7 @@ export const perfumes = [
   { id: 21, marca: "LATTAFA", nombre: "ECLAIRE PISTACHIO", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/lattafa-eclaire-pistachio.webp" },
   { id: 22, marca: "LATTAFA", nombre: "YARA MOI", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-yara-moi.webp" },
   { id: 23, marca: "LATTAFA", nombre: "HAYAATI", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-hayaati.webp" },
-  { id: 24, marca: "LATTAFA", nombre: "MAYAR", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-mayar.webp" },
+  { id: 24, marca: "LATTAFA", nombre: "MAYAR", precioDetal: "38.99", precioMayor: "25.99", descripcion: "", imagen: "/img/lattafa-mayar.webp" },
   { id: 25, marca: "LATTAFA", nombre: "ASAD", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-asad.webp" },
   { id: 26, marca: "LATTAFA", nombre: "PRIDE - PISA", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-pride-pisa.webp" },
   { id: 27, marca: "LATTAFA", nombre: "PRIDE - ART OF UNIVERSE", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-pride-art-of-universe.webp" },
@@ -86,12 +86,12 @@ export const perfumes = [
   { id: 28, marca: "ARMAF", nombre: "CLUB DE NUIT INTENSE MAN", precioDetal: "46.99", precioMayor: "31.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-intense-man.webp" },
   { id: 29, marca: "ARMAF", nombre: "BON BON", precioDetal: "63.99", precioMayor: "42.99", descripcion: "", imagen: "/img/armaf-bon-bon.webp" },
   { id: 30, marca: "ARMAF", nombre: "THE FALCON", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-the-falcon.webp" },
-  { id: 31, marca: "ARMAF", nombre: "ODYSSEY BAHAMAS (TROPICAL COLLECTION)", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-bahamas.webp" },
+  { id: 31, marca: "ARMAF", nombre: "ODYSSEY BAHAMAS (TROPICAL COLLECTION)", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/armaf-odyssey-bahamas.webp" },
   { id: 32, marca: "ARMAF", nombre: "TAG UOMO ROSSO", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-tag-uomo-rosso.webp" },
   { id: 33, marca: "ARMAF", nombre: "VOYAGE TITAN", precioDetal: "28.99", precioMayor: "18.99", descripcion: "", imagen: "/img/armaf-voyage-titan.webp" },
   { id: 34, marca: "ARMAF", nombre: "ODYSSEY MANDARIN SKY (VINTAGE EDITION)", precioDetal: "61.99", precioMayor: "41.99", descripcion: "", imagen: "/img/odyssey-mandarin-sky-vintage-edition.webp" },
   { id: 35, marca: "ARMAF", nombre: "DELIGHTS ISLAND BREEZE", precioDetal: "61.99", precioMayor: "41.99", descripcion: "", imagen: "/img/armaf-delights-island-breeze.webp" },
-  { id: 36, marca: "ARMAF", nombre: "ODYSSEY GO MANGO (TROPICAL COLLECTION)", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/odyssey-go-mango.webp" },
+  { id: 36, marca: "ARMAF", nombre: "ODYSSEY GO MANGO (TROPICAL COLLECTION)", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/odyssey-go-mango.webp" },
   { id: 37, marca: "ARMAF", nombre: "ODYSSEY HOMME WHITE EDITION", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/odyssey-homme-white-edition.webp" },
   { id: 38, marca: "ARMAF", nombre: "DELIGHTS DUBAI DELICACY COTTON CANDY", precioDetal: "45.99", precioMayor: "30.99", descripcion: "", imagen: "/img/armaf-delights-dubai-delicacy-cotton-candy.webp" },
   { id: 39, marca: "ARMAF", nombre: "THE PRIDE OF ARMAF ADMIRAL", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-the-pride-of-armaf-admiral.webp" },
@@ -120,10 +120,10 @@ export const perfumes = [
   { id: 60, marca: "AFNAN", nombre: "9PM", precioDetal: "43.99", precioMayor: "28.99", descripcion: "", imagen: "/img/afnan-9pm.webp" },
 
   // ===== NIKE =====
-  { id: 61, marca: "NIKE", nombre: "TRENDY PINK WOMAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/nike-trendy-pink.webp" },
+  { id: 61, marca: "NIKE", nombre: "TRENDY PINK WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-trendy-pink.webp" },
   { id: 62, marca: "NIKE", nombre: "ULTRA PURPLE WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-ultra-purple.webp" },
   { id: 63, marca: "NIKE", nombre: "PURPLE MOOD WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-purple-mood.webp" },
-  { id: 64, marca: "NIKE", nombre: "ULTRA PINK WOMAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/nike-ultra-pink.webp" },
+  { id: 64, marca: "NIKE", nombre: "ULTRA PINK WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-ultra-pink.webp" },
   { id: 65, marca: "NIKE", nombre: "SWEET BLOSSOM WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-sweet-blossom.webp" },
   { id: 66, marca: "NIKE", nombre: "YUMMY MUSK WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-yummy-musk.webp" },
   { id: 67, marca: "NIKE", nombre: "CORAL CRUSH WOMAN", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/nike-coral-crush-woman.webp" },
@@ -142,12 +142,12 @@ export const perfumes = [
 
   // ===== VALENTINO =====
   { id: 76, marca: "VALENTINO", nombre: "UOMO", precioDetal: "121.99", precioMayor: "81.99", descripcion: "", imagen: "/img/valentino-uomo.webp" },
-  { id: 77, marca: "VALENTINO", nombre: "UOMO BORN IN ROMA GREEN STRAVAGANZA", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/valentino-uomo-born-in-roma-green-stravaganza.webp" },
+  { id: 77, marca: "VALENTINO", nombre: "UOMO BORN IN ROMA GREEN STRAVAGANZA", precioDetal: "168.99", precioMayor: "112.99", descripcion: "", imagen: "/img/valentino-uomo-born-in-roma-green-stravaganza.webp" },
 
   // ===== CAROLINA HERRERA =====
   { id: 78, marca: "CAROLINA HERRERA", nombre: "BAD BOY LE PARFUM", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-bad-boy-le-parfum.webp" },
-  { id: 79, marca: "CAROLINA HERRERA", nombre: "212 VIP BLACK", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-vip-black.webp" },
-  { id: 80, marca: "CAROLINA HERRERA", nombre: "212 SEXY MEN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-sexy-men.webp" },
+  { id: 79, marca: "CAROLINA HERRERA", nombre: "212 VIP BLACK", precioDetal: "183.99", precioMayor: "122.99", descripcion: "", imagen: "/img/carolina-herrera-212-vip-black.webp" },
+  { id: 80, marca: "CAROLINA HERRERA", nombre: "212 SEXY MEN", precioDetal: "100.99", precioMayor: "66.99", descripcion: "", imagen: "/img/carolina-herrera-212-sexy-men.webp" },
 
   // ===== HUGO BOSS =====
   { id: 81, marca: "HUGO BOSS", nombre: "HUGO MAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/hugo-boss-hugo-man.webp" },
@@ -175,8 +175,8 @@ export const perfumes = [
   { id: 101, marca: "NEW BRAND", nombre: "ORIENTAL - NOUR", precioDetal: "16.99", precioMayor: "11.99", descripcion: "", imagen: "/img/new-brand-oriental-nour.webp" },
 
   // ===== DUMONT PARIS =====
-  { id: 102, marca: "DUMONT PARIS", nombre: "NITRO POUR HOMME RED INTENSELY", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/dumont-nitro-red-intensely.webp" },
-  { id: 103, marca: "DUMONT PARIS", nombre: "NITRO POUR HOMME RED", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/dumont-nitro-pour-homme-red.webp" },
+  { id: 102, marca: "DUMONT PARIS", nombre: "NITRO POUR HOMME RED INTENSELY", precioDetal: "70.99", precioMayor: "46.99", descripcion: "", imagen: "/img/dumont-nitro-red-intensely.webp" },
+  { id: 103, marca: "DUMONT PARIS", nombre: "NITRO POUR HOMME RED", precioDetal: "50.99", precioMayor: "33.99", descripcion: "", imagen: "/img/dumont-nitro-pour-homme-red.webp" },
 
   // ===== MAISON ALHAMBRA =====
   { id: 104, marca: "MAISON ALHAMBRA", nombre: "JEAN LOWE IMMORTAL", precioDetal: "46.99", precioMayor: "31.99", descripcion: "", imagen: "/img/maison-alhambra-jean-lowe-immortal.webp" },
@@ -188,18 +188,18 @@ export const perfumes = [
   { id: 106, marca: "RAVE", nombre: "NOW", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/rave-now.webp" },
 
   // ===== PERRY ELLIS =====
-  { id: 107, marca: "PERRY ELLIS", nombre: "360 RED FOR MEN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/perry-ellis-360-red.webp" },
+  { id: 107, marca: "PERRY ELLIS", nombre: "360 RED FOR MEN", precioDetal: "50.99", precioMayor: "33.99", descripcion: "", imagen: "/img/perry-ellis-360-red.webp" },
 
   // ===== FLAVIA =====
   { id: 108, marca: "FLAVIA", nombre: "TOP GUN RED HEAT", precioDetal: "35.99", precioMayor: "23.99", descripcion: "", imagen: "/img/flavia-top-gun-red-heat.webp" },
   { id: 109, marca: "FLAVIA", nombre: "TOP GUN GOLDEN BULLET", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/flavia-top-gun-golden-bullet.webp" },
 
   // ===== BHARARA =====
-  { id: 110, marca: "BHARARA", nombre: "KING", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/bharara-king.webp" },
+  { id: 110, marca: "BHARARA", nombre: "KING", precioDetal: "116.99", precioMayor: "77.99", descripcion: "", imagen: "/img/bharara-king.webp" },
   { id: 111, marca: "BHARARA", nombre: "NICHE FEMME", precioDetal: "75.99", precioMayor: "50.99", descripcion: "", imagen: "/img/bharara-niche-femme.webp" },
 
   // ===== EMPER =====
-  { id: 112, marca: "EMPER", nombre: "MASTER PLATINUM", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/emper-master-platinum.webp" },
+  { id: 112, marca: "EMPER", nombre: "MASTER PLATINUM", precioDetal: "16.99", precioMayor: "11.99", descripcion: "", imagen: "/img/emper-master-platinum.webp" },
 
   // ===== STALLION =====
   { id: 113, marca: "STALLION", nombre: "53", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/stallion-53.webp" },
@@ -215,7 +215,7 @@ export const perfumes = [
   { id: 117, marca: "GIORGIO ARMANI", nombre: "MY WAY", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/giorgio-armani-my-way.webp" },
 
   // ===== ORIENTICA =====
-  { id: 118, marca: "ORIENTICA", nombre: "AMBER ROUGE (LUXURY COLLECTION)", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/orientica-amber-rouge.webp" },
+  { id: 118, marca: "ORIENTICA", nombre: "AMBER ROUGE (LUXURY COLLECTION)", precioDetal: "90.99", precioMayor: "60.99", descripcion: "", imagen: "/img/orientica-amber-rouge.webp" },
 
   // ===== AZZARO =====
   { id: 119, marca: "AZZARO", nombre: "CHROME", precioDetal: "86.99", precioMayor: "57.99", descripcion: "", imagen: "/img/azzaro-chrome.webp" },
@@ -293,7 +293,7 @@ export const perfumes = [
   { id: 151, marca: "GUCCI", nombre: "GUILTY POUR FEMME", precioDetal: "145.99", precioMayor: "96.99", descripcion: "", imagen: "/img/gucci-guilty-pour-femme.webp" },
 
   // ===== ARMAF (NUEVOS) =====
-  { id: 152, marca: "ARMAF", nombre: "ODYSSEY ISLAND BLISS", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-island-bliss.webp" },
+  { id: 152, marca: "ARMAF", nombre: "ODYSSEY ISLAND BLISS", precioDetal: "63.99", precioMayor: "42.99", descripcion: "", imagen: "/img/armaf-odyssey-island-bliss.webp" },
 
   // ===== JEAN PAUL GAULTIER (NUEVOS) =====
   { id: 153, marca: "JEAN PAUL GAULTIER", nombre: "GAULTIER DIVINE", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/jean-paul-gaultier-gaultier-divine.webp" },
@@ -323,7 +323,7 @@ export const perfumes = [
   { id: 161, marca: "ARIANA GRANDE", nombre: "MOD", precioDetal: "88.99", precioMayor: "58.99", descripcion: "", imagen: "/img/ariana-grande-mod.webp" },
 
   // ===== CAROLINA HERRERA (NUEVOS) =====
-  { id: 162, marca: "CAROLINA HERRERA", nombre: "212 VIP MEN NYC", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-vip-men-nyc.webp" },
+  { id: 162, marca: "CAROLINA HERRERA", nombre: "212 VIP MEN NYC", precioDetal: "121.99", precioMayor: "81.99", descripcion: "", imagen: "/img/carolina-herrera-212-vip-men-nyc.webp" },
 
   // ===== PACO RABANNE (NUEVOS) =====
   { id: 163, marca: "PACO RABANNE", nombre: "1 MILLION ROYAL", precioDetal: "143.99", precioMayor: "95.99", descripcion: "", imagen: "/img/paco-rabanne-1-million-royal.webp" },
@@ -365,7 +365,7 @@ export const perfumes = [
   { id: 175, marca: "ARMAF", nombre: "CLUB DE NUIT LIONHEART MAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-club-de-nuit-lionheart-man.webp" },
 
   // ===== ANTONIO BANDERAS (NUEVOS) =====
-  { id: 176, marca: "ANTONIO BANDERAS", nombre: "BLACK SEDUCTION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/antonio-banderas-black-seduction.webp" },
+  { id: 176, marca: "ANTONIO BANDERAS", nombre: "BLACK SEDUCTION", precioDetal: "31.99", precioMayor: "21.99", descripcion: "", imagen: "/img/antonio-banderas-black-seduction.webp" },
 
   // ===== DIOR (NUEVOS) =====
   { id: 177, marca: "DIOR", nombre: "FAHRENHEIT", precioDetal: "168.99", precioMayor: "112.99", descripcion: "", imagen: "/img/dior-fahrenheit.webp" },
@@ -427,7 +427,7 @@ export const perfumes = [
   { id: 197, marca: "CAROLINA HERRERA", nombre: "212 VIP BLACK RED LIMITED EDITION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-vip-black-red-limited-edition.webp" },
 
   // ===== JEAN PAUL GAULTIER (NUEVOS) =====
-  { id: 198, marca: "JEAN PAUL GAULTIER", nombre: "LE BEAU", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/jean-paul-gaultier-le-beau.webp" },
+  { id: 198, marca: "JEAN PAUL GAULTIER", nombre: "LE BEAU", precioDetal: "148.99", precioMayor: "98.99", descripcion: "", imagen: "/img/jean-paul-gaultier-le-beau.webp" },
 
   // ===== BVLGARI (NUEVOS) =====
   { id: 199, marca: "BVLGARI", nombre: "OMNIA BY MARY KATRANTZOU", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/bvlgari-omnia-by-mary-katrantzou.webp" },
@@ -443,7 +443,6 @@ export const perfumes = [
 
   // ===== CAROLINA HERRERA (NUEVOS) =====
   { id: 203, marca: "CAROLINA HERRERA", nombre: "212 MEN HEROES FOREVER YOUNG", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-men-heroes-forever-young.webp" },
-  { id: 204, marca: "CAROLINA HERRERA", nombre: "212 MEN SEXY", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-men-sexy.webp" },
 
   // ===== AL HARAMAIN (NUEVOS) =====
   { id: 205, marca: "AL HARAMAIN", nombre: "AMBER OUD ULTRA VIOLET", precioDetal: "116.99", precioMayor: "77.99", descripcion: "", imagen: "/img/al-haramain-amber-oud-ultra-violet.webp" },
@@ -455,7 +454,7 @@ export const perfumes = [
   { id: 207, marca: "LACOSTE", nombre: "L.12.12 POUR LUI MAGNETIC", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lacoste-l1212-pour-lui-magnetic.webp" },
 
   // ===== CAROLINA HERRERA (NUEVOS) =====
-  { id: 208, marca: "CAROLINA HERRERA", nombre: "212 VIP ROSE", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-vip-rose.webp" },
+  { id: 208, marca: "CAROLINA HERRERA", nombre: "212 VIP ROSE", precioDetal: "146.99", precioMayor: "97.99", descripcion: "", imagen: "/img/carolina-herrera-212-vip-rose.webp" },
 
   // ===== ARMAF (NUEVOS) =====
   { id: 209, marca: "ARMAF", nombre: "ODYSSEY AOUD", precioDetal: "38.99", precioMayor: "25.99", descripcion: "", imagen: "/img/armaf-odyssey-aoud.webp" },
@@ -482,7 +481,7 @@ export const perfumes = [
   { id: 216, marca: "DOLCE & GABBANA", nombre: "LIGHT BLUE", precioDetal: "86.99", precioMayor: "57.99", descripcion: "", imagen: "/img/dolce-and-gabbana-light-blue.webp" },
 
   // ===== LACOSTE (NUEVOS) =====
-  { id: 217, marca: "LACOSTE", nombre: "L.12.12 BLANC", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lacoste-l1212-blanc.webp" },
+  { id: 217, marca: "LACOSTE", nombre: "L.12.12 BLANC", precioDetal: "91.99", precioMayor: "61.99", descripcion: "", imagen: "/img/lacoste-l1212-blanc.webp" },
 
   // ===== PACO RABANNE (NUEVOS) =====
   { id: 218, marca: "PACO RABANNE", nombre: "BLACK XS L'EXCES", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/paco-rabanne-black-xs-lexces.webp" },
@@ -513,7 +512,7 @@ export const perfumes = [
   { id: 227, marca: "ARIANA GRANDE", nombre: "MOD VANILLA", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/ariana-grande-mod-vanilla.webp" },
 
   // ===== ISSEY MIYAKE (NUEVOS) =====
-  { id: 228, marca: "ISSEY MIYAKE", nombre: "L'EAU D'ISSEY", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/issey-miyake-leau-dissey.webp" },
+  { id: 228, marca: "ISSEY MIYAKE", nombre: "L'EAU D'ISSEY", precioDetal: "63.99", precioMayor: "42.99", descripcion: "", imagen: "/img/issey-miyake-leau-dissey.webp" },
 
   // ===== CAROLINA HERRERA (NUEVOS) =====
   { id: 229, marca: "CAROLINA HERRERA", nombre: "212 SEXY", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-212-sexy.webp" },
@@ -541,13 +540,13 @@ export const perfumes = [
   { id: 237, marca: "PACO RABANNE", nombre: "FAME", precioDetal: "138.99", precioMayor: "92.99", descripcion: "", imagen: "/img/paco-rabanne-fame.webp" },
 
   // ===== PARFUMS DE MARLY (NUEVOS) =====
-  { id: 238, marca: "PARFUMS DE MARLY", nombre: "DELINA EXCLUSIVE", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/parfums-de-marly-delina-exclusive.webp" },
+  { id: 238, marca: "PARFUMS DE MARLY", nombre: "DELINA EXCLUSIVE", precioDetal: "408.99", precioMayor: "272.99", descripcion: "", imagen: "/img/parfums-de-marly-delina-exclusive.webp" },
 
   // ===== BRITNEY SPEARS (NUEVOS) =====
   { id: 239, marca: "BRITNEY SPEARS", nombre: "FANTASY", precioDetal: "43.99", precioMayor: "28.99", descripcion: "", imagen: "/img/britney-spears-fantasy.webp" },
 
   // ===== NUEVOS (edited-photo) =====
   { id: 240, marca: "CAROLINA HERRERA", nombre: "GOOD GIRL SO GOOD TO BE BAD", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-good-girl-so-good-to-be-bad.webp" },
-  { id: 241, marca: "MONTBLANC", nombre: "LEGEND", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/montblanc-legend.webp" },
+  { id: 241, marca: "MONTBLANC", nombre: "LEGEND", precioDetal: "93.99", precioMayor: "62.99", descripcion: "", imagen: "/img/montblanc-legend.webp" },
   { id: 242, marca: "LATTAFA", nombre: "MUSAMAM", precioDetal: "56.99", precioMayor: "37.99", descripcion: "", imagen: "/img/lattafa-musamam.webp" },
 ];
