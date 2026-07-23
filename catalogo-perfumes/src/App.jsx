@@ -15,49 +15,24 @@ const EQUIPO = [
   { iniciales: 'P', nombre: 'Pablo', cargo: 'Sales & Market Advisor', desc: 'Especialista en tendencias del sector, rotación de productos y estrategias de comercialización.' },
 ];
 
+// ---- Pilares de marca ----
+const PILARES = [
+  {
+    titulo: 'Cultura Digital y Experiencia Visual',
+    texto: 'Entendemos que en el mercado actual, si no te ven, no existes. Por eso no nos limitamos a publicar fotos de catálogo; creamos contenido informativo, dinámico y de alta calidad que educa al cliente sobre el uso, la durabilidad y la personalidad de cada fragancia.',
+  },
+  {
+    titulo: 'Asesoría Personalizada de Mercado',
+    texto: 'Gracias a nuestro equipo especializado, no vendemos por vender. Analizamos las tendencias del mercado y el perfil de cada cliente para recomendarle exactamente el aroma que se adapta a su estilo de vida, ocasión o personalidad.',
+  },
+  {
+    titulo: 'Conexión Real y Cercanía',
+    texto: 'Detrás de nuestra marca hay un equipo multidisciplinario enfocado en la agilidad, la transparencia y el servicio postventa. Construimos relaciones de confianza a largo plazo, garantizando un acompañamiento cercano desde la primera consulta hasta la entrega.',
+  },
+];
+
 // ---- Textos legales ----
 const TEXTOS_LEGALES = {
-  nosotros: {
-    titulo: 'Quiénes Somos',
-    contenido: (
-      <>
-        <h5>¿Qué nos diferencia?</h5>
-        <p>Nos diferenciamos por tres pilares fundamentales que van más allá de la venta de un frasco de perfume:</p>
-        <div className="space-y-4 my-4">
-          <div>
-            <p className="text-[#f97316] font-bold text-xs uppercase tracking-widest mb-1">Cultura Digital y Experiencia Visual</p>
-            <p>Entendemos que en el mercado actual, si no te ven, no existes. Por eso no nos limitamos a publicar fotos de catálogo; creamos contenido informativo, dinámico y de alta calidad que educa al cliente sobre el uso, la durabilidad y la personalidad de cada fragancia.</p>
-          </div>
-          <div>
-            <p className="text-[#f97316] font-bold text-xs uppercase tracking-widest mb-1">Asesoría Personalizada de Mercado</p>
-            <p>Gracias a nuestro equipo especializado, no vendemos por vender. Analizamos las tendencias del mercado y el perfil de cada cliente para recomendarle exactamente el aroma que se adapta a su estilo de vida, ocasión o personalidad.</p>
-          </div>
-          <div>
-            <p className="text-[#f97316] font-bold text-xs uppercase tracking-widest mb-1">Conexión Real y Cercanía</p>
-            <p>Detrás de nuestra marca hay un equipo multidisciplinario enfocado en la agilidad, la transparencia y el servicio postventa. Construimos relaciones de confianza a largo plazo, garantizando un acompañamiento cercano desde la primera consulta hasta la entrega.</p>
-          </div>
-        </div>
-        <h5>Nuestro equipo</h5>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-          {EQUIPO.map((m) => (
-            <div key={m.nombre} className="bg-[#111] border border-gray-800 rounded-2xl p-4 flex gap-3 items-start">
-              <div
-                className="w-11 h-11 rounded-full bg-[#f97316]/15 border border-[#f97316]/40 text-[#f97316] flex items-center justify-center font-bold text-sm shrink-0"
-                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-              >
-                {m.iniciales}
-              </div>
-              <div>
-                <p className="text-[#e5e5e5] font-bold text-sm">{m.nombre}</p>
-                <p className="text-[#f97316] text-xs mb-1">{m.cargo}</p>
-                <p className="text-gray-400 text-xs leading-snug">{m.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </>
-    ),
-  },
   terminos: {
     titulo: 'Términos y Condiciones',
     contenido: (
@@ -248,7 +223,8 @@ function App() {
   const [modoPrecio, setModoPrecio] = useState('detal'); // 'detal' | 'mayor'
   const [detalle, setDetalle] = useState(null);
   const [notificacion, setNotificacion] = useState(null);
-  const [paginaLegal, setPaginaLegal] = useState(null); // 'nosotros' | 'terminos' | 'privacidad' | 'cookies' | 'descargo' | null
+  const [paginaLegal, setPaginaLegal] = useState(null); // 'terminos' | 'privacidad' | 'cookies' | 'descargo' | null
+  const [mostrarNosotros, setMostrarNosotros] = useState(false);
 
   // Número de WhatsApp
   const numeroWhatsApp = "584120994977";
@@ -627,7 +603,7 @@ function App() {
           </a>
         </div>
         <button
-          onClick={() => setPaginaLegal('nosotros')}
+          onClick={() => setMostrarNosotros(true)}
           className="text-[#e5e5e5] hover:text-[#f97316] text-base tracking-[0.2em] uppercase font-bold transition-colors duration-300 mb-5"
           style={{ fontFamily: "'Bebas Neue', sans-serif" }}
         >
@@ -648,7 +624,7 @@ function App() {
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`relative bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 w-full max-h-[85vh] overflow-y-auto ${paginaLegal === 'nosotros' ? 'max-w-3xl' : 'max-w-2xl'}`}
+            className="relative bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto"
           >
             <div className="flex items-start justify-between mb-6">
               <h3 className="text-xl md:text-2xl text-[#e5e5e5] tracking-wide uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
@@ -662,6 +638,84 @@ function App() {
             </div>
             <div className="legal-texto text-gray-400 text-sm leading-relaxed space-y-4">
               {TEXTOS_LEGALES[paginaLegal].contenido}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PÁGINA QUIÉNES SOMOS */}
+      {mostrarNosotros && (
+        <div className="fixed inset-0 z-50 bg-[#1a1a1a] overflow-y-auto">
+          <div className="sticky top-0 z-10 bg-[#1a1a1a]/90 backdrop-blur-sm border-b border-gray-800">
+            <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-4">
+              <button
+                onClick={() => setMostrarNosotros(false)}
+                className="flex items-center gap-2 text-gray-400 hover:text-[#f97316] transition-colors duration-300 text-sm tracking-wide"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                Volver al catálogo
+              </button>
+              <h4 className="text-[#e5e5e5] text-lg tracking-widest uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>Huele Candela</h4>
+            </div>
+          </div>
+
+          <div className="max-w-5xl mx-auto px-6 py-14 md:py-20">
+            <div className="text-center mb-16 md:mb-20">
+              <h1 className="text-[#e5e5e5] text-5xl md:text-7xl tracking-wider uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                Quiénes Somos
+              </h1>
+              <div className="w-20 h-1 bg-[#f97316] mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <section className="mb-20 md:mb-28">
+              <h2 className="text-[#e5e5e5] text-3xl md:text-4xl tracking-wide uppercase text-center mb-3" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                ¿Qué nos diferencia?
+              </h2>
+              <p className="text-gray-400 text-center max-w-2xl mx-auto mb-10 md:mb-14 leading-relaxed">
+                Nos diferenciamos por tres pilares fundamentales que van más allá de la venta de un frasco de perfume.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {PILARES.map((pilar) => (
+                  <div key={pilar.titulo} className="bg-[#111] border border-gray-800 rounded-2xl p-7 hover:border-[#f97316]/40 transition-colors duration-300">
+                    <p className="text-[#f97316] font-bold text-sm uppercase tracking-widest mb-3" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                      {pilar.titulo}
+                    </p>
+                    <p className="text-gray-400 text-sm leading-relaxed">{pilar.texto}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-[#e5e5e5] text-3xl md:text-4xl tracking-wide uppercase text-center mb-10 md:mb-14" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                Nuestro Equipo
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {EQUIPO.map((m) => (
+                  <div key={m.nombre} className="bg-[#111] border border-gray-800 rounded-2xl p-6 flex flex-col items-center text-center hover:border-[#f97316]/40 transition-colors duration-300">
+                    <div
+                      className="w-16 h-16 rounded-full bg-[#f97316]/15 border border-[#f97316]/40 text-[#f97316] flex items-center justify-center font-bold text-xl mb-4"
+                      style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+                    >
+                      {m.iniciales}
+                    </div>
+                    <p className="text-[#e5e5e5] font-bold text-lg" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{m.nombre}</p>
+                    <p className="text-[#f97316] text-xs uppercase tracking-wide mt-1 mb-3">{m.cargo}</p>
+                    <p className="text-gray-400 text-sm leading-relaxed">{m.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <div className="text-center mt-20 md:mt-24">
+              <button
+                onClick={() => setMostrarNosotros(false)}
+                className="bg-[#f97316] hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-xl transition-colors shadow-lg shadow-orange-500/20 tracking-wider text-sm"
+              >
+                VER CATÁLOGO
+              </button>
             </div>
           </div>
         </div>
