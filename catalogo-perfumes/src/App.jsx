@@ -5,14 +5,26 @@ import { perfumes } from './productos';
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 const parsePrecio = (v) => (v ? parseFloat(String(v).replace(',', '.')) : 0);
 const mostrarPrecio = (v) => (v ? `$${parsePrecio(v).toFixed(2)}` : 'Consultar');
+// Stock ficticio (solo para marketing/urgencia), estable por producto: entre 3 y 18 unidades.
+const stockFicticio = (id) => {
+  const hash = (id * 2654435761) % 2147483647;
+  return 3 + (hash % 16);
+};
+
+// ---- Notificaciones de compra reciente (ficticias, solo marketing) ----
+const NOMBRES_FICTICIOS = [
+  'María', 'Carlos', 'Andrea', 'Luis', 'Valentina', 'José', 'Gabriela', 'Miguel',
+  'Daniela', 'Fernando', 'Camila', 'Ricardo', 'Paola', 'Diego', 'Vanessa', 'Antonio',
+  'Génesis', 'Eduardo', 'Rosa', 'Manuel', 'Carolina', 'Jesús', 'Andreína', 'Kevin',
+];
 
 // ---- Equipo ----
 const EQUIPO = [
-  { iniciales: 'J', nombre: 'Juan', cargo: 'Fundador & Co-CEO', desc: 'Líder de Estrategia General, Inversiones y Desarrollo de Negocio.' },
-  { iniciales: 'Y', nombre: 'Yisbel', cargo: 'Fundadora & Co-CEO (CMO)', desc: 'Líder de Estrategia de Marca, Dirección Creativa y Marketing.' },
-  { iniciales: 'AG', nombre: 'Ángel Gabriel', cargo: 'Co-fundador & CCO / Media Production Manager', desc: 'Encargado de la creación de contenido informativo, producción de video y manejo del lenguaje audiovisual para la presencia digital.' },
-  { iniciales: 'R', nombre: 'Reenier', cargo: 'Business Operations Advisor', desc: 'Asesor senior en dinamización de inventario, procesos operativos y mentoría estratégica de mercado.' },
-  { iniciales: 'P', nombre: 'Pablo', cargo: 'Sales & Market Advisor', desc: 'Especialista en tendencias del sector, rotación de productos y estrategias de comercialización.' },
+  { iniciales: 'J', nombre: 'Juan', cargo: 'CEO' },
+  { iniciales: 'Y', nombre: 'Yisbel', cargo: 'CEO' },
+  { iniciales: 'A', nombre: 'Angel', cargo: 'Marketing' },
+  { iniciales: 'R', nombre: 'Reenier', cargo: 'Operaciones' },
+  { iniciales: 'P', nombre: 'Pablo', cargo: 'Ventas' },
 ];
 
 // ---- Pilares de marca ----
@@ -225,11 +237,38 @@ function App() {
   const [notificacion, setNotificacion] = useState(null);
   const [paginaLegal, setPaginaLegal] = useState(null); // 'terminos' | 'privacidad' | 'cookies' | 'descargo' | null
   const [mostrarNosotros, setMostrarNosotros] = useState(false);
+  const [compraReciente, setCompraReciente] = useState(null);
 
   // Número de WhatsApp
   const numeroWhatsApp = "584120994977";
 
   const marcasUnicas = ['TODAS', ...new Set(perfumes.map(p => p.marca))];
+
+  // ---- Notificación de "compra reciente" (ficticia, marketing) ----
+  useEffect(() => {
+    let timeoutMostrar;
+    let timeoutOcultar;
+
+    const programarSiguiente = () => {
+      const espera = 18000 + Math.random() * 22000; // entre 18s y 40s
+      timeoutMostrar = setTimeout(() => {
+        const nombre = NOMBRES_FICTICIOS[Math.floor(Math.random() * NOMBRES_FICTICIOS.length)];
+        const perfume = perfumes[Math.floor(Math.random() * perfumes.length)];
+        const minutosAtras = 1 + Math.floor(Math.random() * 14);
+        setCompraReciente({ nombre, perfume, minutosAtras });
+        timeoutOcultar = setTimeout(() => {
+          setCompraReciente(null);
+          programarSiguiente();
+        }, 6000);
+      }, espera);
+    };
+
+    programarSiguiente();
+    return () => {
+      clearTimeout(timeoutMostrar);
+      clearTimeout(timeoutOcultar);
+    };
+  }, []);
 
   const precioActivo = (p) => (modoPrecio === 'detal' ? p.precioDetal : p.precioMayor);
 
@@ -302,6 +341,7 @@ function App() {
           <p className="text-gray-500 text-[10px] md:text-xs tracking-[0.2em] uppercase">{perfume.marca}</p>
           <h3 className="text-[#e5e5e5] text-xl md:text-2xl uppercase leading-none tracking-wide mt-1" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{perfume.nombre}</h3>
           <p className="text-[#f97316] font-bold text-sm md:text-base mt-2 tracking-widest" style={{ fontFamily: "'Aileron', sans-serif" }}>{mostrarPrecio(precioActivo(perfume))}</p>
+          <p className="text-gray-600 text-[10px] mt-1 tracking-wide">{stockFicticio(perfume.id)} en stock</p>
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); agregarAlCarrito(perfume); }}
@@ -702,8 +742,7 @@ function App() {
                       {m.iniciales}
                     </div>
                     <p className="text-[#e5e5e5] font-bold text-lg" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{m.nombre}</p>
-                    <p className="text-[#f97316] text-xs uppercase tracking-wide mt-1 mb-3">{m.cargo}</p>
-                    <p className="text-gray-400 text-sm leading-relaxed">{m.desc}</p>
+                    <p className="text-[#f97316] text-xs uppercase tracking-wide mt-1">{m.cargo}</p>
                   </div>
                 ))}
               </div>
@@ -731,6 +770,24 @@ function App() {
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
         </svg>
       </a>
+
+      {/* Notificación de compra reciente (marketing) */}
+      {compraReciente && (
+        <div className="fixed bottom-6 left-4 right-4 md:left-6 md:right-auto md:bottom-8 z-40 md:max-w-xs animate-fade-in">
+          <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-2xl p-3.5 flex items-center gap-3">
+            <div className="relative shrink-0 w-12 h-12 rounded-xl bg-[#111] border border-gray-800 flex items-center justify-center overflow-hidden">
+              <img src={compraReciente.perfume.imagen} alt="" className="object-contain w-full h-full p-1" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-green-500 border-2 border-[#1a1a1a] animate-pulse"></span>
+            </div>
+            <div className="min-w-0">
+              <p className="text-[#e5e5e5] text-xs leading-snug">
+                <span className="font-bold">{compraReciente.nombre}</span> acaba de comprar <span className="text-[#f97316] font-bold">{compraReciente.perfume.nombre}</span>
+              </p>
+              <p className="text-gray-500 text-[10px] mt-0.5">hace {compraReciente.minutosAtras} min</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Notificación (Toast) */}
       {notificacion && (
@@ -760,6 +817,7 @@ function App() {
               <div className="p-7 md:p-10 flex flex-col">
                 <p className="text-[#f97316] text-xs tracking-[0.3em] uppercase font-bold">{detalle.marca}</p>
                 <h2 className="text-[#e5e5e5] text-4xl md:text-5xl uppercase leading-none tracking-wide mt-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{detalle.nombre}</h2>
+                <p className="text-gray-500 text-xs mt-2 tracking-wide">{stockFicticio(detalle.id)} en stock</p>
 
                 {detalle.descripcion && (
                   <p className="text-gray-400 text-sm leading-relaxed mt-5">{detalle.descripcion}</p>
