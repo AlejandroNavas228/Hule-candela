@@ -130,10 +130,12 @@ export const perfumes = [
   { id: 68, marca: "NIKE", nombre: "MAN INDIGO", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/nike-man-indigo.webp" },
 
   // ===== VERSACE =====
-  { id: 69, marca: "VERSACE", nombre: "EROS FLAME", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/versace-eros-flame.webp" },
-  { id: 70, marca: "VERSACE", nombre: "EROS", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/versace-eros.webp" },
+  { id: 69, marca: "VERSACE", nombre: "EROS FLAME", precioDetal: "113.99", precioMayor: "75.99", descripcion: "", imagen: "/img/versace-eros-flame.webp" },
+  { id: 70, marca: "VERSACE", nombre: "EROS", precioDetal: "110.99", precioMayor: "73.99", descripcion: "", imagen: "/img/versace-eros.webp" },
   { id: 71, marca: "VERSACE", nombre: "POUR HOMME DYLAN BLUE", precioDetal: "88.99", precioMayor: "58.99", descripcion: "", imagen: "/img/versace-pour-homme-dylan-blue.webp" },
   { id: 72, marca: "VERSACE", nombre: "EROS PARFUM", precioDetal: "130.99", precioMayor: "86.99", descripcion: "", imagen: "/img/versace-eros-parfum.webp" },
+  { id: 244, marca: "VERSACE", nombre: "EROS ENERGY", precioDetal: "125.99", precioMayor: "83.99", descripcion: "", imagen: "/img/versace-eros-energy.webp" },
+  { id: 245, marca: "VERSACE", nombre: "EROS NAJIM", precioDetal: "123.99", precioMayor: "82.99", descripcion: "", imagen: "/img/versace-eros-najim.webp" },
 
   // ===== JEAN PAUL GAULTIER =====
   { id: 73, marca: "JEAN PAUL GAULTIER", nombre: "LE MALE", precioDetal: "133.99", precioMayor: "88.99", descripcion: "", imagen: "/img/jean-paul-gaultier-le-male.webp" },
@@ -145,7 +147,7 @@ export const perfumes = [
   { id: 77, marca: "VALENTINO", nombre: "UOMO BORN IN ROMA GREEN STRAVAGANZA", precioDetal: "168.99", precioMayor: "112.99", descripcion: "", imagen: "/img/valentino-uomo-born-in-roma-green-stravaganza.webp" },
 
   // ===== CAROLINA HERRERA =====
-  { id: 78, marca: "CAROLINA HERRERA", nombre: "BAD BOY LE PARFUM", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-bad-boy-le-parfum.webp" },
+  { id: 78, marca: "CAROLINA HERRERA", nombre: "BAD BOY LE PARFUM", precioDetal: "126.99", precioMayor: "84.99", descripcion: "", imagen: "/img/carolina-herrera-bad-boy-le-parfum.webp" },
   { id: 79, marca: "CAROLINA HERRERA", nombre: "212 VIP BLACK", precioDetal: "183.99", precioMayor: "122.99", descripcion: "", imagen: "/img/carolina-herrera-212-vip-black.webp" },
   { id: 80, marca: "CAROLINA HERRERA", nombre: "212 SEXY MEN", precioDetal: "100.99", precioMayor: "66.99", descripcion: "", imagen: "/img/carolina-herrera-212-sexy-men.webp" },
 
@@ -272,7 +274,7 @@ export const perfumes = [
 
   // ===== ARMAF (NUEVOS) =====
   { id: 144, marca: "ARMAF", nombre: "CLUB DE NUIT WOMAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-club-de-nuit-woman.webp" },
-  { id: 145, marca: "ARMAF", nombre: "ODYSSEY MEGA", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-mega.webp" },
+  { id: 145, marca: "ARMAF", nombre: "ODYSSEY MEGA", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/armaf-odyssey-mega.webp" },
 
   // ===== AL HARAMAIN (NUEVOS) =====
   { id: 146, marca: "AL HARAMAIN", nombre: "AMBER OUD DUBAI NIGHT", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/al-haramain-amber-oud-dubai-night.webp" },
@@ -332,7 +334,7 @@ export const perfumes = [
   { id: 164, marca: "ARMAF", nombre: "ODYSSEY WILD ONE GOLD EDITION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-wild-one-gold-edition.webp" },
 
   // ===== PACO RABANNE (NUEVOS) =====
-  { id: 165, marca: "PACO RABANNE", nombre: "PHANTOM", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/paco-rabanne-phantom.webp" },
+  { id: 165, marca: "PACO RABANNE", nombre: "PHANTOM", precioDetal: "146.99", precioMayor: "97.99", descripcion: "", imagen: "/img/paco-rabanne-phantom.webp" },
 
   // ===== LACOSTE (NUEVOS) =====
   { id: 166, marca: "LACOSTE", nombre: "L.12.12 POUR ELLE", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lacoste-l1212-pour-elle.webp" },
