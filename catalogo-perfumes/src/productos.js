@@ -131,11 +131,12 @@ export const perfumes = [
 
   // ===== VERSACE =====
   { id: 69, marca: "VERSACE", nombre: "EROS FLAME", precioDetal: "113.99", precioMayor: "75.99", descripcion: "", imagen: "/img/versace-eros-flame.webp" },
-  { id: 70, marca: "VERSACE", nombre: "EROS", precioDetal: "110.99", precioMayor: "73.99", descripcion: "", imagen: "/img/versace-eros.webp" },
+  { id: 70, marca: "VERSACE", nombre: "EROS", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/versace-eros.webp" },
   { id: 71, marca: "VERSACE", nombre: "POUR HOMME DYLAN BLUE", precioDetal: "88.99", precioMayor: "58.99", descripcion: "", imagen: "/img/versace-pour-homme-dylan-blue.webp" },
   { id: 72, marca: "VERSACE", nombre: "EROS PARFUM", precioDetal: "130.99", precioMayor: "86.99", descripcion: "", imagen: "/img/versace-eros-parfum.webp" },
   { id: 244, marca: "VERSACE", nombre: "EROS ENERGY", precioDetal: "125.99", precioMayor: "83.99", descripcion: "", imagen: "/img/versace-eros-energy.webp" },
   { id: 245, marca: "VERSACE", nombre: "EROS NAJIM", precioDetal: "123.99", precioMayor: "82.99", descripcion: "", imagen: "/img/versace-eros-najim.webp" },
+  { id: 246, marca: "VERSACE", nombre: "EROS EAU DE PARFUM", precioDetal: "110.99", precioMayor: "73.99", descripcion: "", imagen: "/img/versace-eros-edp.webp" },
 
   // ===== JEAN PAUL GAULTIER =====
   { id: 73, marca: "JEAN PAUL GAULTIER", nombre: "LE MALE", precioDetal: "133.99", precioMayor: "88.99", descripcion: "", imagen: "/img/jean-paul-gaultier-le-male.webp" },
