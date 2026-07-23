@@ -11,13 +11,6 @@ const stockFicticio = (id) => {
   return 3 + (hash % 16);
 };
 
-// ---- Notificaciones de compra reciente (ficticias, solo marketing) ----
-const NOMBRES_FICTICIOS = [
-  'María', 'Carlos', 'Andrea', 'Luis', 'Valentina', 'José', 'Gabriela', 'Miguel',
-  'Daniela', 'Fernando', 'Camila', 'Ricardo', 'Paola', 'Diego', 'Vanessa', 'Antonio',
-  'Génesis', 'Eduardo', 'Rosa', 'Manuel', 'Carolina', 'Jesús', 'Andreína', 'Kevin',
-];
-
 // ---- Equipo ----
 const EQUIPO = [
   { iniciales: 'J', nombre: 'Juan', cargo: 'CEO', desc: 'Líder de Estrategia General, Inversiones y Desarrollo de Negocio.' },
@@ -252,10 +245,9 @@ function App() {
     const programarSiguiente = () => {
       const espera = 18000 + Math.random() * 22000; // entre 18s y 40s
       timeoutMostrar = setTimeout(() => {
-        const nombre = NOMBRES_FICTICIOS[Math.floor(Math.random() * NOMBRES_FICTICIOS.length)];
         const perfume = perfumes[Math.floor(Math.random() * perfumes.length)];
         const minutosAtras = 1 + Math.floor(Math.random() * 14);
-        setCompraReciente({ nombre, perfume, minutosAtras });
+        setCompraReciente({ perfume, minutosAtras });
         timeoutOcultar = setTimeout(() => {
           setCompraReciente(null);
           programarSiguiente();
@@ -782,9 +774,8 @@ function App() {
             </div>
             <div className="min-w-0">
               <p className="text-[#e5e5e5] text-xs leading-snug">
-                <span className="font-bold">{compraReciente.nombre}</span> acaba de comprar <span className="text-[#f97316] font-bold">{compraReciente.perfume.nombre}</span>
+                <span className="text-[#f97316] font-bold">{compraReciente.perfume.nombre}</span> fue comprado hace {compraReciente.minutosAtras} min
               </p>
-              <p className="text-gray-500 text-[10px] mt-0.5">hace {compraReciente.minutosAtras} min</p>
             </div>
           </div>
         </div>
