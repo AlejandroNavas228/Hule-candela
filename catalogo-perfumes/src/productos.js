@@ -249,8 +249,8 @@ export const perfumes = [
   { id: 133, marca: "ARMAF", nombre: "CLUB DE NUIT MILESTONE", precioDetal: "51.99", precioMayor: "34.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-milestone.webp" },
 
   // ===== LATTAFA (NUEVOS) =====
-  { id: 134, marca: "LATTAFA", nombre: "YARA GOLD", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-yara-gold.webp" },
   { id: 135, marca: "LATTAFA", nombre: "BADEE AL OUD AMETHYST", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-badee-al-oud-amethyst.webp" },
+  { id: 243, marca: "LATTAFA", nombre: "YARA ELIXIR", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/lattafa-yara-elixir.webp" },
 
   // ===== JEAN PAUL GAULTIER (NUEVOS) =====
   { id: 136, marca: "JEAN PAUL GAULTIER", nombre: "LE MALE ELIXIR", precioDetal: "216.99", precioMayor: "144.99", descripcion: "", imagen: "/img/jean-paul-gaultier-le-male-elixir.webp" },
