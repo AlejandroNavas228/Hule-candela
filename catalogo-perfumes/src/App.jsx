@@ -6,8 +6,58 @@ const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,
 const parsePrecio = (v) => (v ? parseFloat(String(v).replace(',', '.')) : 0);
 const mostrarPrecio = (v) => (v ? `$${parsePrecio(v).toFixed(2)}` : 'Consultar');
 
+// ---- Equipo ----
+const EQUIPO = [
+  { iniciales: 'J', nombre: 'Juan', cargo: 'Fundador & Co-CEO', desc: 'Líder de Estrategia General, Inversiones y Desarrollo de Negocio.' },
+  { iniciales: 'Y', nombre: 'Yisbel', cargo: 'Fundadora & Co-CEO (CMO)', desc: 'Líder de Estrategia de Marca, Dirección Creativa y Marketing.' },
+  { iniciales: 'AG', nombre: 'Ángel Gabriel', cargo: 'Co-fundador & CCO / Media Production Manager', desc: 'Encargado de la creación de contenido informativo, producción de video y manejo del lenguaje audiovisual para la presencia digital.' },
+  { iniciales: 'R', nombre: 'Reenier', cargo: 'Business Operations Advisor', desc: 'Asesor senior en dinamización de inventario, procesos operativos y mentoría estratégica de mercado.' },
+  { iniciales: 'P', nombre: 'Pablo', cargo: 'Sales & Market Advisor', desc: 'Especialista en tendencias del sector, rotación de productos y estrategias de comercialización.' },
+];
+
 // ---- Textos legales ----
 const TEXTOS_LEGALES = {
+  nosotros: {
+    titulo: 'Quiénes Somos',
+    contenido: (
+      <>
+        <h5>¿Qué nos diferencia?</h5>
+        <p>Nos diferenciamos por tres pilares fundamentales que van más allá de la venta de un frasco de perfume:</p>
+        <div className="space-y-4 my-4">
+          <div>
+            <p className="text-[#f97316] font-bold text-xs uppercase tracking-widest mb-1">Cultura Digital y Experiencia Visual</p>
+            <p>Entendemos que en el mercado actual, si no te ven, no existes. Por eso no nos limitamos a publicar fotos de catálogo; creamos contenido informativo, dinámico y de alta calidad que educa al cliente sobre el uso, la durabilidad y la personalidad de cada fragancia.</p>
+          </div>
+          <div>
+            <p className="text-[#f97316] font-bold text-xs uppercase tracking-widest mb-1">Asesoría Personalizada de Mercado</p>
+            <p>Gracias a nuestro equipo especializado, no vendemos por vender. Analizamos las tendencias del mercado y el perfil de cada cliente para recomendarle exactamente el aroma que se adapta a su estilo de vida, ocasión o personalidad.</p>
+          </div>
+          <div>
+            <p className="text-[#f97316] font-bold text-xs uppercase tracking-widest mb-1">Conexión Real y Cercanía</p>
+            <p>Detrás de nuestra marca hay un equipo multidisciplinario enfocado en la agilidad, la transparencia y el servicio postventa. Construimos relaciones de confianza a largo plazo, garantizando un acompañamiento cercano desde la primera consulta hasta la entrega.</p>
+          </div>
+        </div>
+        <h5>Nuestro equipo</h5>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+          {EQUIPO.map((m) => (
+            <div key={m.nombre} className="bg-[#111] border border-gray-800 rounded-2xl p-4 flex gap-3 items-start">
+              <div
+                className="w-11 h-11 rounded-full bg-[#f97316]/15 border border-[#f97316]/40 text-[#f97316] flex items-center justify-center font-bold text-sm shrink-0"
+                style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+              >
+                {m.iniciales}
+              </div>
+              <div>
+                <p className="text-[#e5e5e5] font-bold text-sm">{m.nombre}</p>
+                <p className="text-[#f97316] text-xs mb-1">{m.cargo}</p>
+                <p className="text-gray-400 text-xs leading-snug">{m.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    ),
+  },
   terminos: {
     titulo: 'Términos y Condiciones',
     contenido: (
@@ -198,7 +248,7 @@ function App() {
   const [modoPrecio, setModoPrecio] = useState('detal'); // 'detal' | 'mayor'
   const [detalle, setDetalle] = useState(null);
   const [notificacion, setNotificacion] = useState(null);
-  const [paginaLegal, setPaginaLegal] = useState(null); // 'terminos' | 'privacidad' | 'cookies' | 'descargo' | null
+  const [paginaLegal, setPaginaLegal] = useState(null); // 'nosotros' | 'terminos' | 'privacidad' | 'cookies' | 'descargo' | null
 
   // Número de WhatsApp
   const numeroWhatsApp = "584120994977";
@@ -576,6 +626,13 @@ function App() {
             <svg fill="currentColor" viewBox="0 0 24 24" className="w-7 h-7"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.16-3.44-3.35-3.46-5.7-.02-2.14.93-4.18 2.59-5.46 1.49-1.14 3.42-1.57 5.23-1.19.16.03.32.08.47.14v4.11c-.42-.14-.87-.2-1.31-.17-1.14.04-2.22.61-2.92 1.52-.78 1.05-.98 2.47-.53 3.69.44 1.16 1.51 2 2.75 2.22 1.25.21 2.55-.13 3.43-1.03.95-.94 1.41-2.3 1.39-3.64V0h4.21z" /></svg>
           </a>
         </div>
+        <button
+          onClick={() => setPaginaLegal('nosotros')}
+          className="text-[#e5e5e5] hover:text-[#f97316] text-base tracking-[0.2em] uppercase font-bold transition-colors duration-300 mb-5"
+          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+        >
+          Quiénes Somos
+        </button>
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 px-6">
           <button onClick={() => setPaginaLegal('terminos')} className="text-gray-500 hover:text-[#f97316] text-xs tracking-wide transition-colors duration-300">Términos y Condiciones</button>
           <button onClick={() => setPaginaLegal('privacidad')} className="text-gray-500 hover:text-[#f97316] text-xs tracking-wide transition-colors duration-300">Política de Privacidad</button>
@@ -591,7 +648,7 @@ function App() {
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto"
+            className={`relative bg-[#1a1a1a] border border-gray-700 rounded-3xl p-8 w-full max-h-[85vh] overflow-y-auto ${paginaLegal === 'nosotros' ? 'max-w-3xl' : 'max-w-2xl'}`}
           >
             <div className="flex items-start justify-between mb-6">
               <h3 className="text-xl md:text-2xl text-[#e5e5e5] tracking-wide uppercase" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
