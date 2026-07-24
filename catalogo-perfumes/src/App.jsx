@@ -371,9 +371,13 @@ function App() {
     let mensaje = `🔥 *¡Hola Huele Candela! Quiero hacer un pedido:*\n\n`;
     carrito.forEach(item => {
       const p = item.precioAplicado ? `$${item.precioAplicado}` : 'precio a consultar';
-      mensaje += `▪️ ${item.cantidad}x ${item.nombre} (${p})\n`;
+      const bs = item.precioAplicado && tasaBs ? ` / ${formatBs(item.precioAplicado, tasaBs)}` : '';
+      mensaje += `▪️ ${item.cantidad}x ${item.nombre} (${p}${bs})\n`;
     });
     mensaje += `\n💰 *Total a pagar:* $${totalFormateado}${hayPreciosPendientes ? ' (+ productos a consultar)' : ''}\n`;
+    if (tasaBs && !hayPreciosPendientes) {
+      mensaje += `💵 *Total en Bs (tasa USDT):* ${formatBs(total, tasaBs)}\n`;
+    }
     mensaje += `🏷️ *Modalidad:* ${modoPrecio === 'detal' ? 'Al detal' : 'Al mayor'}\n\n`;
     mensaje += `📦 *Mis datos de envío:*\n👤 Nombre: ${datosCliente.nombre}\n📍 Dirección: ${datosCliente.direccion}\n`;
     if (datosCliente.notas) mensaje += `📝 Notas: ${datosCliente.notas}\n`;
