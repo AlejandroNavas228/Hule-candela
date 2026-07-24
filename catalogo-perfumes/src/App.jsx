@@ -11,6 +11,38 @@ const stockFicticio = (id) => {
   return 3 + (hash % 16);
 };
 
+// ---- Conversión a bolívares (tasa Binance/USDT) ----
+const TASA_CACHE_KEY = 'hc_tasa_bs_v1';
+
+const formatBs = (usd, tasa) => {
+  const monto = parsePrecio(usd) * tasa;
+  return `Bs ${monto.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+};
+
+const obtenerTasaBs = async () => {
+  // 1) intenta traer la tasa Binance/USDT en vivo
+  try {
+    const res = await fetch('https://pydolarve.org/api/v1/dollar?page=binance&monitor=usd', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      const price = data?.price ?? data?.monitors?.usd?.price ?? data?.monitors?.binance?.price ?? null;
+      if (typeof price === 'number' && price > 0) {
+        try { localStorage.setItem(TASA_CACHE_KEY, JSON.stringify({ price, ts: Date.now() })); } catch {}
+        return price;
+      }
+    }
+  } catch {
+    // sin conexión o API caída: seguimos al respaldo
+  }
+  // 2) respaldo: última tasa guardada en este navegador (aunque tenga horas/días)
+  try {
+    const cached = JSON.parse(localStorage.getItem(TASA_CACHE_KEY));
+    if (cached?.price) return cached.price;
+  } catch {}
+  // 3) sin nada disponible
+  return null;
+};
+
 // ---- Notificaciones de compra reciente (ficticias, solo marketing) ----
 const NOMBRES_FICTICIOS = [
   'María', 'Carlos', 'Andrea', 'Luis', 'Valentina', 'José', 'Gabriela', 'Miguel',
@@ -238,10 +270,17 @@ function App() {
   const [paginaLegal, setPaginaLegal] = useState(null); // 'terminos' | 'privacidad' | 'cookies' | 'descargo' | null
   const [mostrarNosotros, setMostrarNosotros] = useState(false);
   const [compraReciente, setCompraReciente] = useState(null);
+  const [tasaBs, setTasaBs] = useState(null);
 
   // Número de WhatsApp
   const numeroWhatsApp = "584120994977";
 
+  // ---- Cargar tasa de conversión a Bs (Binance/USDT) al iniciar ----
+  useEffect(() => {
+    let activo = true;
+    obtenerTasaBs().then((precio) => { if (activo) setTasaBs(precio); });
+    return () => { activo = false; };
+  }, []);
   const marcasUnicas = ['TODAS', ...new Set(perfumes.map(p => p.marca))];
 
   // ---- Notificación de "compra reciente" (ficticia, marketing) ----
@@ -341,6 +380,9 @@ function App() {
           <p className="text-gray-500 text-[10px] md:text-xs tracking-[0.2em] uppercase">{perfume.marca}</p>
           <h3 className="text-[#e5e5e5] text-xl md:text-2xl uppercase leading-none tracking-wide mt-1" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{perfume.nombre}</h3>
           <p className="text-[#f97316] font-bold text-sm md:text-base mt-2 tracking-widest" style={{ fontFamily: "'Aileron', sans-serif" }}>{mostrarPrecio(precioActivo(perfume))}</p>
+          {tasaBs && precioActivo(perfume) && (
+            <p className="text-gray-500 text-[10px] mt-0.5 tracking-wide">{formatBs(precioActivo(perfume), tasaBs)}</p>
+          )}
           <p className="text-gray-600 text-[10px] mt-1 tracking-wide">{stockFicticio(perfume.id)} en stock</p>
         </div>
         <button
@@ -828,11 +870,21 @@ function App() {
                 <div className="mt-6 space-y-3">
                   <div className={`flex items-center justify-between rounded-2xl border px-5 py-3.5 transition-colors ${modoPrecio === 'detal' ? 'border-[#f97316]/60 bg-[#f97316]/5' : 'border-gray-700 bg-[#2a2a2a]/50'}`}>
                     <span className="text-gray-400 text-xs tracking-widest uppercase">Al detal</span>
-                    <span className={`font-bold tracking-widest ${modoPrecio === 'detal' ? 'text-[#f97316]' : 'text-[#e5e5e5]'}`}>{mostrarPrecio(detalle.precioDetal)}</span>
+                    <span className="text-right">
+                      <span className={`block font-bold tracking-widest ${modoPrecio === 'detal' ? 'text-[#f97316]' : 'text-[#e5e5e5]'}`}>{mostrarPrecio(detalle.precioDetal)}</span>
+                      {tasaBs && detalle.precioDetal && (
+                        <span className="block text-gray-500 text-[10px] font-normal tracking-wide mt-0.5">{formatBs(detalle.precioDetal, tasaBs)}</span>
+                      )}
+                    </span>
                   </div>
                   <div className={`flex items-center justify-between rounded-2xl border px-5 py-3.5 transition-colors ${modoPrecio === 'mayor' ? 'border-[#f97316]/60 bg-[#f97316]/5' : 'border-gray-700 bg-[#2a2a2a]/50'}`}>
                     <span className="text-gray-400 text-xs tracking-widest uppercase">Al mayor</span>
-                    <span className={`font-bold tracking-widest ${modoPrecio === 'mayor' ? 'text-[#f97316]' : 'text-[#e5e5e5]'}`}>{mostrarPrecio(detalle.precioMayor)}</span>
+                    <span className="text-right">
+                      <span className={`block font-bold tracking-widest ${modoPrecio === 'mayor' ? 'text-[#f97316]' : 'text-[#e5e5e5]'}`}>{mostrarPrecio(detalle.precioMayor)}</span>
+                      {tasaBs && detalle.precioMayor && (
+                        <span className="block text-gray-500 text-[10px] font-normal tracking-wide mt-0.5">{formatBs(detalle.precioMayor, tasaBs)}</span>
+                      )}
+                    </span>
                   </div>
                 </div>
 
