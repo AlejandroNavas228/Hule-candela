@@ -240,7 +240,7 @@ function App() {
   const [compraReciente, setCompraReciente] = useState(null);
 
   // Número de WhatsApp
-  const numeroWhatsApp = "584120994977";
+  const numeroWhatsApp = "584164023732";
 
   const marcasUnicas = ['TODAS', ...new Set(perfumes.map(p => p.marca))];
 
