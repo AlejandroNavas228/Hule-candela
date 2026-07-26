@@ -203,6 +203,7 @@ function App() {
         onCerrar={() => setIsCartOpen(false)}
         carrito={carrito}
         onEliminar={eliminarDelCarrito}
+        total={total}
         totalFormateado={totalFormateado}
         hayPreciosPendientes={hayPreciosPendientes}
         onFinalizarPedido={() => { setIsCartOpen(false); setIsCheckoutOpen(true); }}

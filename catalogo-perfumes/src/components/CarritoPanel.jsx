@@ -6,6 +6,7 @@ export function CarritoPanel({
   onCerrar,
   carrito,
   onEliminar,
+  total,
   totalFormateado,
   hayPreciosPendientes,
   onFinalizarPedido,
@@ -43,7 +44,13 @@ export function CarritoPanel({
         {carrito.length > 0 && (
           <div className="p-6 border-t border-gray-200 bg-gray-50">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-lg font-bold text-gray-900">Total:</span><span className="text-2xl font-bold text-[#f97316]" style={{ fontFamily: "'Aileron', sans-serif" }}>${totalFormateado}</span>
+              <span className="text-lg font-bold text-gray-900">Total:</span>
+              <span className="text-right">
+                <span className="block text-2xl font-bold text-[#f97316]" style={{ fontFamily: "'Aileron', sans-serif" }}>${totalFormateado}</span>
+                {tasaBs && !hayPreciosPendientes && (
+                  <span className="block text-xs text-gray-500 font-normal mt-0.5">{formatBs(total, tasaBs)}</span>
+                )}
+              </span>
             </div>
             {hayPreciosPendientes && (
               <p className="text-xs text-gray-500 mb-4">* Algunos productos tienen precio a consultar y no están incluidos en el total.</p>
