@@ -206,6 +206,7 @@ function App() {
         totalFormateado={totalFormateado}
         hayPreciosPendientes={hayPreciosPendientes}
         onFinalizarPedido={() => { setIsCartOpen(false); setIsCheckoutOpen(true); }}
+        tasaBs={tasaBs}
       />
 
       <CheckoutModal

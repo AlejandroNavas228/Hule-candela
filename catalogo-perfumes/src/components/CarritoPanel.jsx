@@ -1,3 +1,5 @@
+import { formatBs } from '../utils/tasaBs';
+
 // ---- PANEL LATERAL DEL CARRITO ----
 export function CarritoPanel({
   isCartOpen,
@@ -7,6 +9,7 @@ export function CarritoPanel({
   totalFormateado,
   hayPreciosPendientes,
   onFinalizarPedido,
+  tasaBs,
 }) {
   if (!isCartOpen) return null;
   return (
@@ -27,6 +30,9 @@ export function CarritoPanel({
                 <div className="flex-1">
                   <h4 className="font-bold text-gray-900 text-sm md:text-base leading-tight" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>{item.nombre}</h4>
                   <p className="text-[#f97316] font-bold text-xs md:text-sm mt-1" style={{ fontFamily: "'Aileron', sans-serif" }}>{item.precioAplicado ? `$${item.precioAplicado}` : 'Consultar'}</p>
+                  {tasaBs && item.precioAplicado && (
+                    <p className="text-gray-500 text-[10px] mt-0.5">{formatBs(item.precioAplicado, tasaBs)}</p>
+                  )}
                   <p className="text-xs text-gray-500 mt-1">Cantidad: {item.cantidad}</p>
                 </div>
                 <button onClick={() => onEliminar(item.id)} className="text-red-400 hover:text-red-600"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg></button>
