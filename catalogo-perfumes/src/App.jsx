@@ -39,7 +39,7 @@ function App() {
   const [tasaBs, setTasaBs] = useState(null);
 
   // Número de WhatsApp
-  const numeroWhatsApp = "584120994977";
+  const numeroWhatsApp = "584164023732";
 
   // ---- Cargar tasa de conversión a Bs (Binance/USDT) al iniciar ----
   useEffect(() => {
