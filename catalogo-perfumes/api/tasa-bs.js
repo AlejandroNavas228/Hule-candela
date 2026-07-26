@@ -28,12 +28,12 @@ export default async function handler(req, res) {
 
     const datos = await respuesta.json();
     const binance = Array.isArray(datos?.rates)
-      ? datos.rates.find((r) => r.market === 'binance_p2p')
+      ? datos.rates.find((r) => r.market === 'binance')
       : null;
     const price = binance?.mid ?? null;
 
     if (typeof price !== 'number' || price <= 0) {
-      res.status(502).json({ error: 'Cotizave no devolvió una tasa binance_p2p válida.' });
+      res.status(502).json({ error: 'Cotizave no devolvió una tasa binance válida.' });
       return;
     }
 
