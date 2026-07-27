@@ -41,12 +41,12 @@ export const perfumes = [
     precioDetal: "", precioMayor: "", descripcion: "", 
     imagen: "/img/yara.webp" 
   },
-  { 
-    id: 7, 
-    marca: "LATTAFA", 
-    nombre: "FAKHAR ROSE GOLD", 
-    precioDetal: "36.99", precioMayor: "24.99", descripcion: "", 
-    imagen: "/img/fakhar-rose-gold.webp" 
+  {
+    id: 7,
+    marca: "LATTAFA",
+    nombre: "FAKHAR ROSE",
+    precioDetal: "45.99", precioMayor: "30.99", descripcion: "",
+    imagen: "/img/fakhar-rose-gold.webp"
   },
   { 
     id: 8, 
@@ -67,10 +67,10 @@ export const perfumes = [
   { id: 10, marca: "LATTAFA", nombre: "QAED AL FURSAN UNLIMITED", precioDetal: "28.99", precioMayor: "18.99", descripcion: "", imagen: "/img/lattafa-qaed-al-fursan-unlimited.webp" },
   { id: 12, marca: "LATTAFA", nombre: "ASAD BOURBON", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-asad-bourbon.webp" },
   { id: 13, marca: "LATTAFA", nombre: "THE KINGDOM", precioDetal: "40.99", precioMayor: "26.99", descripcion: "", imagen: "/img/lattafa-the-kingdom.webp" },
-  { id: 14, marca: "LATTAFA", nombre: "ANGHAM", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-angham.webp" },
+  { id: 14, marca: "LATTAFA", nombre: "ANGHAM", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/lattafa-angham.webp" },
   { id: 15, marca: "LATTAFA", nombre: "BADE'E AL OUD - OUD FOR GLORY", precioDetal: "33.99", precioMayor: "22.99", descripcion: "", imagen: "/img/lattafa-badee-al-oud-for-glory.webp" },
   { id: 16, marca: "LATTAFA", nombre: "KHAMRAH QAHWA", precioDetal: "50.99", precioMayor: "33.99", descripcion: "", imagen: "/img/lattafa-khamrah-qahwa.webp" },
-  { id: 18, marca: "LATTAFA", nombre: "FAKHAR", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/lattafa-fakhar.webp" },
+  { id: 18, marca: "LATTAFA", nombre: "FAKHAR SILVER", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/lattafa-fakhar.webp" },
   { id: 19, marca: "LATTAFA", nombre: "PETRA", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/lattafa-petra.webp" },
   { id: 20, marca: "LATTAFA", nombre: "ASAD ZANZIBAR", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-asad-zanzibar.webp" },
   { id: 21, marca: "LATTAFA", nombre: "ECLAIRE PISTACHIO", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/lattafa-eclaire-pistachio.webp" },
@@ -87,34 +87,34 @@ export const perfumes = [
   { id: 29, marca: "ARMAF", nombre: "BON BON", precioDetal: "63.99", precioMayor: "42.99", descripcion: "", imagen: "/img/armaf-bon-bon.webp" },
   { id: 30, marca: "ARMAF", nombre: "THE FALCON", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-the-falcon.webp" },
   { id: 31, marca: "ARMAF", nombre: "ODYSSEY BAHAMAS (TROPICAL COLLECTION)", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/armaf-odyssey-bahamas.webp" },
-  { id: 32, marca: "ARMAF", nombre: "TAG UOMO ROSSO", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-tag-uomo-rosso.webp" },
+  { id: 32, marca: "ARMAF", nombre: "TAG UOMO ROSSO", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/armaf-tag-uomo-rosso.webp" },
   { id: 33, marca: "ARMAF", nombre: "VOYAGE TITAN", precioDetal: "28.99", precioMayor: "18.99", descripcion: "", imagen: "/img/armaf-voyage-titan.webp" },
   { id: 34, marca: "ARMAF", nombre: "ODYSSEY MANDARIN SKY (VINTAGE EDITION)", precioDetal: "61.99", precioMayor: "41.99", descripcion: "", imagen: "/img/odyssey-mandarin-sky-vintage-edition.webp" },
   { id: 35, marca: "ARMAF", nombre: "DELIGHTS ISLAND BREEZE", precioDetal: "61.99", precioMayor: "41.99", descripcion: "", imagen: "/img/armaf-delights-island-breeze.webp" },
   { id: 36, marca: "ARMAF", nombre: "ODYSSEY GO MANGO (TROPICAL COLLECTION)", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/odyssey-go-mango.webp" },
   { id: 37, marca: "ARMAF", nombre: "ODYSSEY HOMME WHITE EDITION", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/odyssey-homme-white-edition.webp" },
   { id: 38, marca: "ARMAF", nombre: "DELIGHTS DUBAI DELICACY COTTON CANDY", precioDetal: "45.99", precioMayor: "30.99", descripcion: "", imagen: "/img/armaf-delights-dubai-delicacy-cotton-candy.webp" },
-  { id: 39, marca: "ARMAF", nombre: "THE PRIDE OF ARMAF ADMIRAL", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-the-pride-of-armaf-admiral.webp" },
+  { id: 39, marca: "ARMAF", nombre: "THE PRIDE OF ARMAF ADMIRAL", precioDetal: "58.99", precioMayor: "38.99", descripcion: "", imagen: "/img/armaf-the-pride-of-armaf-admiral.webp" },
   { id: 40, marca: "ARMAF", nombre: "ODYSSEY LIMONI", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/armaf-odyssey-limoni.webp" },
   { id: 41, marca: "ARMAF", nombre: "ODYSSEY MARSHMALLOW", precioDetal: "50.99", precioMayor: "33.99", descripcion: "", imagen: "/img/armaf-odyssey-marshmallow.webp" },
-  { id: 42, marca: "ARMAF", nombre: "CLUB DE NUIT ICONIC", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-club-de-nuit-iconic.webp" },
+  { id: 42, marca: "ARMAF", nombre: "CLUB DE NUIT ICONIC", precioDetal: "70.99", precioMayor: "46.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-iconic.webp" },
   { id: 43, marca: "ARMAF", nombre: "CLUB DE NUIT URBAN MAN ELIXIR", precioDetal: "58.99", precioMayor: "38.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-urban-man-elixir.webp" },
   { id: 44, marca: "ARMAF", nombre: "ETER ARABIAN SKY", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-eter-arabian-sky.webp" },
   { id: 45, marca: "ARMAF", nombre: "ODYSSEY MANDARIN SKY ELIXIR", precioDetal: "66.99", precioMayor: "44.99", descripcion: "", imagen: "/img/odyssey-mandarin-sky-elixir.webp" },
-  { id: 46, marca: "ARMAF", nombre: "ODYSSEY ARTISTO - THE RED EDITION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/odyssey-artisto-red-edition.webp" },
-  { id: 47, marca: "ARMAF", nombre: "CLUB DE NUIT UNTOLD", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-club-de-nuit-untold.webp" },
+  { id: 46, marca: "ARMAF", nombre: "ODYSSEY ARTISTO - THE RED EDITION", precioDetal: "60.99", precioMayor: "40.99", descripcion: "", imagen: "/img/odyssey-artisto-red-edition.webp" },
+  { id: 47, marca: "ARMAF", nombre: "CLUB DE NUIT UNTOLD", precioDetal: "66.99", precioMayor: "44.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-untold.webp" },
   { id: 48, marca: "ARMAF", nombre: "CLUB DE NUIT BLING", precioDetal: "66.99", precioMayor: "44.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-bling.webp" },
-  { id: 49, marca: "ARMAF", nombre: "ODYSSEY SPECTRA - RAINBOW EDITION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/odyssey-spectra-rainbow-edition.webp" },
+  { id: 49, marca: "ARMAF", nombre: "ODYSSEY SPECTRA - RAINBOW EDITION", precioDetal: "46.99", precioMayor: "31.99", descripcion: "", imagen: "/img/odyssey-spectra-rainbow-edition.webp" },
   { id: 50, marca: "ARMAF", nombre: "DELIGHTS ISLAND BLISS", precioDetal: "63.99", precioMayor: "42.99", descripcion: "", imagen: "/img/armaf-delights-island-bliss.webp" },
   { id: 51, marca: "ARMAF", nombre: "DELIGHTS YUM YUM", precioDetal: "56.99", precioMayor: "37.99", descripcion: "", imagen: "/img/armaf-delights-yum-yum.webp" },
-  { id: 52, marca: "ARMAF", nombre: "ODYSSEY CANDEE - SPECIAL EDITION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-candee.webp" },
-  { id: 53, marca: "ARMAF", nombre: "ODYSSEY MANDARIN SKY - LIMITED EDITION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-mandarin-sky.webp" },
+  { id: 52, marca: "ARMAF", nombre: "ODYSSEY CANDEE - SPECIAL EDITION", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/armaf-odyssey-candee.webp" },
+  { id: 53, marca: "ARMAF", nombre: "ODYSSEY MANDARIN SKY - LIMITED EDITION", precioDetal: "48.99", precioMayor: "32.99", descripcion: "", imagen: "/img/armaf-odyssey-mandarin-sky.webp" },
   { id: 54, marca: "ARMAF", nombre: "VENTANA POUR HOMME", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/armaf-ventana-pour-homme.webp" },
 
   // ===== AFNAN =====
   { id: 55, marca: "AFNAN", nombre: "9 PM NIGHT OUT", precioDetal: "71.99", precioMayor: "47.99", descripcion: "", imagen: "/img/afnan-9pm-night-out.webp" },
   { id: 56, marca: "AFNAN", nombre: "9AM (I AM 9)", precioDetal: "46.99", precioMayor: "31.99", descripcion: "", imagen: "/img/afnan-9am.webp" },
-  { id: 57, marca: "AFNAN", nombre: "9PM REBEL", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/afnan-9pm-rebel.webp" },
+  { id: 57, marca: "AFNAN", nombre: "9PM REBEL", precioDetal: "61.99", precioMayor: "41.99", descripcion: "", imagen: "/img/afnan-9pm-rebel.webp" },
   { id: 58, marca: "AFNAN", nombre: "9AM POUR FEMME", precioDetal: "51.99", precioMayor: "34.99", descripcion: "", imagen: "/img/afnan-9am-pour-femme.webp" },
   { id: 59, marca: "AFNAN", nombre: "9PM ELIXIR", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/afnan-9pm-elixir.webp" },
   { id: 60, marca: "AFNAN", nombre: "9PM", precioDetal: "43.99", precioMayor: "28.99", descripcion: "", imagen: "/img/afnan-9pm.webp" },
@@ -252,7 +252,7 @@ export const perfumes = [
   { id: 133, marca: "ARMAF", nombre: "CLUB DE NUIT MILESTONE", precioDetal: "51.99", precioMayor: "34.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-milestone.webp" },
 
   // ===== LATTAFA (NUEVOS) =====
-  { id: 135, marca: "LATTAFA", nombre: "BADEE AL OUD AMETHYST", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-badee-al-oud-amethyst.webp" },
+  { id: 135, marca: "LATTAFA", nombre: "BADEE AL OUD AMETHYST", precioDetal: "45.99", precioMayor: "30.99", descripcion: "", imagen: "/img/lattafa-badee-al-oud-amethyst.webp" },
   { id: 243, marca: "LATTAFA", nombre: "YARA ELIXIR", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/lattafa-yara-elixir.webp" },
 
   // ===== JEAN PAUL GAULTIER (NUEVOS) =====
@@ -265,7 +265,7 @@ export const perfumes = [
   { id: 138, marca: "LATTAFA", nombre: "BADEE AL OUD SUBLIME", precioDetal: "43.99", precioMayor: "28.99", descripcion: "", imagen: "/img/lattafa-badee-al-oud-sublime.webp" },
 
   // ===== ARMAF (NUEVOS) =====
-  { id: 139, marca: "ARMAF", nombre: "ODYSSEY HOMME", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-homme.webp" },
+  { id: 139, marca: "ARMAF", nombre: "ODYSSEY HOMME", precioDetal: "45.99", precioMayor: "30.99", descripcion: "", imagen: "/img/armaf-odyssey-homme.webp" },
 
   // ===== LATTAFA (NUEVOS) =====
   { id: 140, marca: "LATTAFA", nombre: "HER CONFESSION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-her-confession.webp" },
@@ -274,7 +274,7 @@ export const perfumes = [
   { id: 143, marca: "LATTAFA", nombre: "BADEE AL OUD HONOR & GLORY", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/lattafa-badee-al-oud-honor-and-glory.webp" },
 
   // ===== ARMAF (NUEVOS) =====
-  { id: 144, marca: "ARMAF", nombre: "CLUB DE NUIT WOMAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-club-de-nuit-woman.webp" },
+  { id: 144, marca: "ARMAF", nombre: "CLUB DE NUIT WOMAN", precioDetal: "53.99", precioMayor: "35.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-woman.webp" },
   { id: 145, marca: "ARMAF", nombre: "ODYSSEY MEGA", precioDetal: "41.99", precioMayor: "27.99", descripcion: "", imagen: "/img/armaf-odyssey-mega.webp" },
 
   // ===== AL HARAMAIN (NUEVOS) =====
@@ -287,7 +287,7 @@ export const perfumes = [
   { id: 148, marca: "AL HARAMAIN", nombre: "AMBER OUD AQUA DUBAI", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/al-haramain-amber-oud-aqua-dubai.webp" },
 
   // ===== ARMAF (NUEVOS) =====
-  { id: 149, marca: "ARMAF", nombre: "CLUB DE NUIT SILLAGE", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-club-de-nuit-sillage.webp" },
+  { id: 149, marca: "ARMAF", nombre: "CLUB DE NUIT SILLAGE", precioDetal: "63.99", precioMayor: "42.99", descripcion: "", imagen: "/img/armaf-club-de-nuit-sillage.webp" },
 
   // ===== LATTAFA (NUEVOS) =====
   { id: 150, marca: "LATTAFA", nombre: "ATHEERI", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-atheeri.webp" },
@@ -398,7 +398,7 @@ export const perfumes = [
   { id: 185, marca: "PACO RABANNE", nombre: "1 MILLION", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/paco-rabanne-1-million.webp" },
 
   // ===== LATTAFA (NUEVOS) =====
-  { id: 186, marca: "LATTAFA", nombre: "QAED AL FURSAN", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-qaed-al-fursan.webp" },
+  { id: 186, marca: "LATTAFA", nombre: "QAED AL FURSAN", precioDetal: "35.99", precioMayor: "23.99", descripcion: "", imagen: "/img/lattafa-qaed-al-fursan.webp" },
   { id: 187, marca: "LATTAFA", nombre: "EMEER", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/lattafa-emeer.webp" },
 
   // ===== NAUTICA (NUEVOS) =====
@@ -552,4 +552,16 @@ export const perfumes = [
   { id: 240, marca: "CAROLINA HERRERA", nombre: "GOOD GIRL SO GOOD TO BE BAD", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/carolina-herrera-good-girl-so-good-to-be-bad.webp" },
   { id: 241, marca: "MONTBLANC", nombre: "LEGEND", precioDetal: "93.99", precioMayor: "62.99", descripcion: "", imagen: "/img/montblanc-legend.webp" },
   { id: 242, marca: "LATTAFA", nombre: "MUSAMAM", precioDetal: "56.99", precioMayor: "37.99", descripcion: "", imagen: "/img/lattafa-musamam.webp" },
+
+  // ===== NUEVOS (27-jul) =====
+  { id: 247, marca: "AFNAN", nombre: "9AM DIVE", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/afnan-9am-dive.webp" },
+  { id: 248, marca: "AFNAN", nombre: "9PM POUR FEMME", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/afnan-9pm-pour-femme.webp" },
+  { id: 249, marca: "ARMAF", nombre: "ODYSSEY EAU DE MONTAGNE (MOUNTAIN EDITION)", precioDetal: "", precioMayor: "", descripcion: "", imagen: "/img/armaf-odyssey-eau-de-montagne.webp" },
+  { id: 250, marca: "ARMAF", nombre: "ODYSSEY TOFFEE COFFEE", precioDetal: "66.99", precioMayor: "44.99", descripcion: "", imagen: "/img/armaf-odyssey-toffee-coffee.webp" },
+
+  // ===== NUEVOS (27-jul, ronda 2) =====
+  { id: 251, marca: "NEBRAS", nombre: "ELIXIR", precioDetal: "63.99", precioMayor: "42.99", descripcion: "", imagen: "/img/nebras-elixir.webp" },
+  { id: 252, marca: "ARMAF", nombre: "ODYSSEY PINK POP", precioDetal: "81.99", precioMayor: "54.99", descripcion: "", imagen: "/img/armaf-odyssey-pink-pop.webp" },
+  { id: 253, marca: "ARMAF", nombre: "ODYSSEY LI'CHI LUSH", precioDetal: "81.99", precioMayor: "54.99", descripcion: "", imagen: "/img/armaf-odyssey-lichi-lush.webp" },
+  { id: 254, marca: "ARMAF", nombre: "ODYSSEY AQUA", precioDetal: "58.99", precioMayor: "38.99", descripcion: "", imagen: "/img/armaf-odyssey-aqua.webp" },
 ];
