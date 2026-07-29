@@ -575,7 +575,7 @@ export const perfumes = [
   { id: 261, marca: "ARMAF", nombre: "EL CIELO POUR HOMME", precioDetal: "38.99", precioMayor: "25.99", descripcion: "", imagen: "/img/armaf-el-cielo-pour-homme.webp" },
   { id: 262, marca: "ARMAF", nombre: "BEACH PARTY", precioDetal: "61.99", precioMayor: "41.99", descripcion: "", imagen: "/img/armaf-beach-party.webp" },
   { id: 263, marca: "LATTAFA", nombre: "HAYAATI AL MALEKY", precioDetal: "30.99", precioMayor: "20.99", descripcion: "", imagen: "/img/lattafa-hayaati-al-maleky.webp" },
-  { id: 264, marca: "LATTAFA", nombre: "PRIDE OF LATTAFA - SILVER EDITION", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/lattafa-pride-of-lattafa-silver-edition.webp" },
+  { id: 264, marca: "LATTAFA", nombre: "PRIDE OF LATTAFA - SILVER PLATINUM", precioDetal: "36.99", precioMayor: "24.99", descripcion: "", imagen: "/img/lattafa-pride-of-lattafa-silver-edition.webp" },
   { id: 265, marca: "LATTAFA", nombre: "ASAD ELIXIR", precioDetal: "55.99", precioMayor: "36.99", descripcion: "", imagen: "/img/lattafa-asad-elixir.webp" },
   { id: 266, marca: "LATTAFA", nombre: "JASOOR", precioDetal: "45.99", precioMayor: "30.99", descripcion: "", imagen: "/img/lattafa-jasoor.webp" },
   { id: 267, marca: "LATTAFA", nombre: "NAJDIA", precioDetal: "30.99", precioMayor: "20.99", descripcion: "", imagen: "/img/lattafa-najdia.webp" },
